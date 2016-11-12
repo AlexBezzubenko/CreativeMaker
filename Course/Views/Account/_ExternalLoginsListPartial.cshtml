@@ -1,0 +1,45 @@
+﻿@model Course.Models.ExternalLoginListViewModel
+@using Microsoft.Owin.Security
+
+@Styles.Render("~/Content/font-awesome")
+@Styles.Render("~/Content/bootstrap-social")
+
+<h4>Use another service to log in.</h4>
+<hr />
+@{
+    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+    if (loginProviders.Count() == 0) {
+        <div>
+            <p>
+                There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                for details on setting up this ASP.NET application to support logging in via external services.
+            </p>
+        </div>
+    }
+    else {
+        using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl })) {
+            @Html.AntiForgeryToken()
+            <div id="socialLoginList">
+                <p>
+                    @foreach (AuthenticationDescription p in loginProviders)
+                    {
+                        string buttonClass = "btn-" + p.Caption.ToLower();
+                        string faClass = "fa-" + p.Caption.ToLower();
+
+                        if (p.Caption.ToLower() == "vkontakte")
+                        {
+                            buttonClass = "btn-vk";
+                            faClass = "fa-vk";
+                        }
+                         
+                        <button type="submit" style="padding:0; width:50px; height:50px; " class="btn @buttonClass" 
+                                id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" 
+                                title="Log in using your @p.Caption account">
+                                <span class="fa fa-3x @faClass"></span>
+                        </button>
+                    }
+                </p>
+            </div>
+        }
+    }
+}

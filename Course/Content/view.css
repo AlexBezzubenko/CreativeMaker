@@ -1,0 +1,78 @@
+﻿h2{
+    margin-top:0;
+    margin-left:20px;
+}
+#page_header{
+    margin-top:20px;
+    height:40px;
+}
+#username_views{
+    margin-top:10px;
+    margin-bottom:20px;
+    height:50px;
+}
+
+#username_views > a{
+    float:right;
+    color:green;
+    margin-right:20px;
+    margin-top:30px;
+}
+#username_views > a:hover{
+    color:springgreen;
+}
+#username_views > p{
+    float:right;
+    font-size:large;
+    margin-right:20px;
+    margin-top:30px;
+    padding:0;
+}
+
+#name, #username {
+	float: left;
+}
+#rateYoDiv, #rateYoGlobalDiv,
+#rateText, #yourMarkText, #views{
+	float: right;
+}
+
+#rateYoDiv{
+    margin-right:20px;
+}
+
+#rateText{
+    margin-right:20px;
+    margin-top:7px;
+    font-size:20px;
+}
+
+#yourMarkText{
+    margin-top:7px;
+    font-size:20px;
+}
+#username > p{
+    font-size:large;
+    margin-left:20px;
+    margin-top:2px;
+    margin-bottom:0;
+}
+#username > p > i{
+    margin-right:10px;
+}
+
+#views{
+    border: 0px solid black;
+    margin-right:20px;
+    margin-top:35px;
+}
+#views > i{
+    display:inline
+}
+#views > p{
+    display:inline; 
+    font-size:x-large; 
+}
+ 
+ 
+

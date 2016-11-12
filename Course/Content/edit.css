@@ -1,0 +1,23 @@
+﻿ 
+#headers{
+    background-color:red;
+    padding:0px;
+}
+
+#header_content{
+    background-color:green;
+    min-height:700px;
+}
+
+.header_text{
+    resize: vertical;
+    background-color:red;
+    width:100%;
+    min-height:100px;
+}
+
+#headers_with_content{
+    background-color:yellow;
+}
+ 
+

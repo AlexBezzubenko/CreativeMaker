@@ -1,0 +1,103 @@
+﻿@using Course.Models;
+@using Microsoft.AspNet.Identity;
+
+@model Creative
+
+@{
+    ViewBag.Title = "ViewCreative";
+    <link rel="stylesheet" type="text/css" href="~/Content/view.css" />
+}
+
+<div id="page_header">
+    <h2 id="name">@Model.Name</h2>
+    
+    @if (!ViewBag.IsOwnerOrNotAuthenticated)
+    {
+        <div id="rateYoDiv" class="rateYo"></div>
+        <div id="yourMarkText">
+            <span>@Resources.Resource.YourMark:</span>
+        </div>
+    }
+    <div id="rateText">
+        <span>@Model.Rating.ToString("0.0") @Resources.Resource.Of 5</span>
+    </div>
+    <div id="rateYoGlobalDiv" class="rateYo"></div>
+    
+</div>
+<div id="username_views">
+    @if (@Model.ApplicationUser != null)
+    {   
+        <div id="username">
+            <p>@Model.ApplicationUser.UserName</p>
+            <p>
+                <i class="fa fa-calendar fa-2x" aria-hidden="true"></i>
+                @Model.CreationTime
+            </p>
+        </div>
+        <div id="views">            
+            <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
+            <p>@Model.Views</p>
+        </div>
+        <p>
+            <i class="fa fa-calendar-check-o fa-2x" aria-hidden="true"></i>
+            @Model.CreationTime
+        </p>
+        <a href="/User/Edit/@Model.Id"><i class="fa fa-3x fa-pencil-square-o" aria-hidden="true"></i></a>
+        
+    }
+</div>
+
+<div id="headers">
+    @foreach(var header in Model.Headers)
+    {
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">@header.Name @header.Id</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    @header.Text
+                </p>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var rate = @Model.Rating.ToString().Replace(',', '.');
+
+            $("#rateYoGlobalDiv").rateYo({
+                numStars: 1,
+                fullStar:true,
+                starWidth: "40px",
+                rating:5,
+                readOnly: true
+            });
+
+            var rate = @Model.Rating.ToString().Replace(',', '.');
+
+            $("#rateYoDiv").rateYo({
+                starWidth: "40px",
+                halfStar: true,
+                rating: "@ViewBag.UserMark",
+                readOnly: @ViewBag.IsOwnerOrNotAuthenticated.ToString().ToLower(),
+            });
+
+            $("#rateYoDiv").rateYo()
+              .on("rateyo.set", function (e, data) {
+                  $.ajax({
+                      async: false,
+                      data: { id: "@Model.Id", rating: data.rating},
+                      url: '/User/EstimateCreative'
+                  }).success(function (newRating) {
+                      $('#rateText span').html(newRating + " @Resources.Resource.Of 5");
+                  });
+              });
+        });
+
+    </script>
+}
+
+ 
