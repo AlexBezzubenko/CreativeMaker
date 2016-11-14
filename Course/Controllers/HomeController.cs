@@ -24,7 +24,7 @@ namespace Course.Controllers
             ViewBag.PopularCreatives = db.Creatives.Include(x => x.ApplicationUser)
                                 .Include(x => x.Headers).OrderByDescending(u => u.Views).Take(5);
             //ViewBag.Tags = db.Tags.GroupBy(p => p.Name).Select(g => g.FirstOrDefault());
-
+            ViewBag.Tags = db.Tags.ToList();
             return View();
         }
 
@@ -32,7 +32,7 @@ namespace Course.Controllers
         {
             var tag = db.Tags.Find(id);
             var headers = db.Headers.Where(x => x.Tags.Where(y => y.Name == tag.Name).Any()).Include(x => x.Tags).Include(x=>x.Creative);
-            ViewBag.Headers = headers;
+            ViewBag.Headers = tag.Headers;
             return View();
         }
 

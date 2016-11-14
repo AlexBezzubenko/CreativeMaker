@@ -7,43 +7,41 @@
     <link href="~/Content/simplemde.min.css" rel="stylesheet" type="text/css">
 }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+<br />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+<div id="page_header" class="row">
+    <div id="back_button" class="col-md-3">
+        <a href="/User/Index" class="btn btn-success">
+            <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+        </a>
+    </div>
+
+    <div id="creative_name_block" class="col-md-9">
+        @using (Html.BeginForm())
+        { 
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div id="creative_name_input">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { autocomplete = "off", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
-        </div>
 
-        @Html.HiddenFor(model => model.Views)
-        @Html.HiddenFor(model => model.Rating)
-        @Html.HiddenFor(model => model.RatingsAmount)
-        @Html.HiddenFor(model => model.CreationTime)
-        @Html.HiddenFor(model => model.LastEditTime)
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div id="creative_name_edit">
+                <button type="button" class="btn btn-github" id="edit_creative_name_button">
+                    <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                </button>
             </div>
-        </div>
+        }
     </div>
-}
+</div>
 
 
 
 
-<button class="btn btn-primary" id="add_header" type="button" style="width:190px;">
-    Add
-</button>
+ <div>
+    <button type="button" class="btn btn-github" id="add_header">
+        <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
+    </button>
+</div>
 <div id="headers_with_content" class="row">
     <div id="headers" class="col-md-3">
         <ul id="headers_list" class="list-group">
@@ -76,11 +74,10 @@
 </div>
 
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
 
 @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/tag-it.js" type="text/javascript" charset="utf-8"></script>
     <script src="~/Scripts/simplemde.min.js" type="text/javascript" charset="utf-8"></script>
     <script>
@@ -125,11 +122,41 @@
 
                     $("#myTags").tagit("removeAll");
                     headerJson.Tags.forEach(function (item, i, arr) {
-                        $("#myTags").tagit("createTag", item.Name);
+                        $("#myTags").tagit("createTag", item);
                     });
                 });
             });
-            
+            $("#edit_creative_name_button").on('click', function () {
+
+                var creative_name = $('#Name').val();
+                var data = {Id:@Model.Id, Name: creative_name };
+
+                $.ajax({
+                    type: 'POST',
+                    async: false,
+                    data: data,
+                    url: '/User/ChangeCreativeName'
+                }).success(function (id) {
+                    window.location.reload(true);
+                    //window.location.href = "/User/Edit/" + id;
+                });
+                //console.log("--text--" + name);
+            });
+            $("#add_header").on('click', function () {
+                @{
+                    var newHeader = new Course.Models.Header();
+                    Model.Headers.Add(newHeader);
+                }
+                @*$.ajax({
+                    async: false,
+                    data: { id: "@Model.Id" },
+                    url: '/User/AddHeader'
+                }).success(function (partialView) {
+                    $('#headers_list').append(partialView);
+                    $("#headers_list").accordion("refresh");
+                });*@
+            });
+
         });
     </script>
 

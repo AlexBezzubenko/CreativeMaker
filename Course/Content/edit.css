@@ -1,23 +1,58 @@
-﻿ 
+﻿#page_header{
+    margin-bottom:20px;
+} 
+
+#creative_name_block{
+    float:right;
+    padding:0;
+}
+ 
+
+#back_button{
+    padding:0;
+    float:left;
+}
+ 
+#creative_name_input{
+     display:inline-block;
+}
+
+#creative_name_input input{
+    font-size:30px;
+    max-width:260px;
+    height:auto;
+}
+
+#creative_name_edit{
+    display:inline-block;
+     position:relative;
+     top:-6px;
+}
+
+
+
+
+#add_header{
+    margin-left:-16px;
+}
+ 
 #headers{
-    background-color:red;
     padding:0px;
+    background-color:yellow;
 }
 
 #header_content{
-    background-color:green;
     min-height:700px;
+    background-color:red;
 }
 
 .header_text{
     resize: vertical;
-    background-color:red;
     width:100%;
     min-height:100px;
 }
 
 #headers_with_content{
-    background-color:yellow;
 }
  
 

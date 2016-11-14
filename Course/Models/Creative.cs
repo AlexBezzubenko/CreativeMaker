@@ -27,8 +27,7 @@ namespace Course.Models
         [DataType(DataType.DateTime)]
         public DateTime LastEditTime { get; set; }
 
-        public virtual Collection<Header> Headers { get; private set; }
-        public virtual Collection<Badge> Badges { get; private set; }
+        public virtual Collection<Header> Headers { get; set; }
 
         public virtual ICollection<Rating> Ratings { get; set; }
 
@@ -40,7 +39,6 @@ namespace Course.Models
             CreationTime = DateTime.Now;
             LastEditTime = DateTime.Now;
             Headers = new Collection<Header>();
-            Badges = new Collection<Badge>();
         }
     }
 }

@@ -80,15 +80,10 @@ E:\D\itransition\Course-Project\Course\bin\Microsoft.Owin.Security.MicrosoftAcco
 E:\D\itransition\Course-Project\Course\obj\Debug\Course.csprojResolveAssemblyReference.cache
 E:\D\itransition\Course-Project\Course\obj\Debug\Course.dll
 E:\D\itransition\Course-Project\Course\obj\Debug\Course.pdb
-E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.migration.resources
 E:\D\itransition\Course-Project\Course\obj\Debug\Course.csproj.GenerateResource.Cache
 E:\D\itransition\Course-Project\Course\bin\Duke.Owin.VkontakteMiddleware.dll
 E:\D\itransition\Course-Project\Course\bin\en\Course.resources.dll
 E:\D\itransition\Course-Project\Course\obj\Debug\Course.Resources.Resource.resources
 E:\D\itransition\Course-Project\Course\obj\Debug\Course.Resources.Resource.en.resources
 E:\D\itransition\Course-Project\Course\obj\Debug\en\Course.resources.dll
-E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.migration1.resources
-E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.migration2.resources
-E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.migration_rate.resources
-E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.migration_rate2.resources
-E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.migration3.resources
+E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.migration.resources

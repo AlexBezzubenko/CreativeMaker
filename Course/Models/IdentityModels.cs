@@ -12,7 +12,7 @@ namespace Course.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        public virtual ICollection<Rating> UserCreatives { get; set; }
+        public virtual ICollection<Rating> Ratings { get; set; }
         public virtual ICollection<Badge> Badges { get; set; }
         public virtual DateTime RegistrationDate { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -25,7 +25,8 @@ namespace Course.Models
 
         public ApplicationUser()
         {
-            UserCreatives = new List<Rating>();
+            RegistrationDate = System.DateTime.Now;
+            Ratings = new List<Rating>();
             Badges = new List<Badge>();
         }
     }
@@ -50,6 +51,8 @@ namespace Course.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Header>().HasMany(h => h.Tags)
             .WithMany(t => t.Headers)
             .Map(q => q.MapLeftKey("HeaderId")

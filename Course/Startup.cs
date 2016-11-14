@@ -32,15 +32,23 @@ namespace Course
             var admin = new ApplicationUser { Email = "admin@gmail.com", UserName = "admin@gmail.com" };
 
             string password = "adminme";
-            var result = userManager.Create(admin, password);
-
-            if (result.Succeeded)
+            try
             {
-                userManager.AddToRole(admin.Id, roleAdmin.Name);
-                //userManager.AddToRole(admin.Id, roleUser.Name);
-            }
+                var result = userManager.Create(admin, password);
+                if (result.Succeeded)
+                {
+                    userManager.AddToRole(admin.Id, roleAdmin.Name);
+                    //userManager.AddToRole(admin.Id, roleUser.Name);
+                }
 
-            context.SaveChanges();
+                context.SaveChanges();
+
+            }
+            catch(System.Exception e)
+            {
+                throw e;
+            }
+           
         }
     }
 }

@@ -209,29 +209,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Bootstrap.cs" />
-    <Compile Include="Migrations\201611041112580_migration.cs" />
-    <Compile Include="Migrations\201611041112580_migration.Designer.cs">
-      <DependentUpon>201611041112580_migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611061216303_migration1.cs" />
-    <Compile Include="Migrations\201611061216303_migration1.Designer.cs">
-      <DependentUpon>201611061216303_migration1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611061307183_migration2.cs" />
-    <Compile Include="Migrations\201611061307183_migration2.Designer.cs">
-      <DependentUpon>201611061307183_migration2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611091039301_migration_rate.cs" />
-    <Compile Include="Migrations\201611091039301_migration_rate.Designer.cs">
-      <DependentUpon>201611091039301_migration_rate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611091128404_migration_rate2.cs" />
-    <Compile Include="Migrations\201611091128404_migration_rate2.Designer.cs">
-      <DependentUpon>201611091128404_migration_rate2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611091603505_migration3.cs" />
-    <Compile Include="Migrations\201611091603505_migration3.Designer.cs">
-      <DependentUpon>201611091603505_migration3.cs</DependentUpon>
+    <Compile Include="Migrations\201611121139576_migration.cs" />
+    <Compile Include="Migrations\201611121139576_migration.Designer.cs">
+      <DependentUpon>201611121139576_migration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -398,24 +378,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611041112580_migration.resx">
-      <DependentUpon>201611041112580_migration.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611061216303_migration1.resx">
-      <DependentUpon>201611061216303_migration1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611061307183_migration2.resx">
-      <DependentUpon>201611061307183_migration2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611091039301_migration_rate.resx">
-      <DependentUpon>201611091039301_migration_rate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611091128404_migration_rate2.resx">
-      <DependentUpon>201611091128404_migration_rate2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611091603505_migration3.resx">
-      <DependentUpon>201611091603505_migration3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611121139576_migration.resx">
+      <DependentUpon>201611121139576_migration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

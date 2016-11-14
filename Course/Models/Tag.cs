@@ -18,7 +18,7 @@ namespace Course.Models
         public virtual ICollection<Header> Headers { get; set; }
         public Tag()
         {
-            this.Headers = new List<Header>();
+            Headers = new List<Header>();
         }
 
     }

@@ -39,16 +39,18 @@ namespace Course.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Add(Creative creative)
+        public long CreateCreative(string name)
         {
             var currentUser = db.Users.Find(User.Identity.GetUserId());
 
+            Creative creative = new Creative();
+            creative.Name = name;
             creative.ApplicationUser = currentUser;
-            db.Creatives.Add(creative);
 
+            db.Creatives.Add(creative);
             db.SaveChanges();
 
-            return RedirectToAction("Index");
+            return creative.Id;
         }
 
         [Authorize]
@@ -103,6 +105,19 @@ namespace Course.Controllers
             return View(creative);
         }
 
+
+        [Authorize]
+        [HttpPost]
+        public void ChangeCreativeName(long Id, string Name)
+        {
+            Creative creative = db.Creatives.Find(Id);
+            creative.Name = Name;
+
+            db.Entry(creative).State = EntityState.Modified;
+            db.SaveChanges();
+            return;
+        }
+
         public ActionResult View(int id)
         {
             Creative creative = db.Creatives.Find(id);
@@ -143,8 +158,10 @@ namespace Course.Controllers
         {
             var header = db.Headers.Find(id);
             var serializer = new JavaScriptSerializer();
+            var simpleHeader = new { Text = header.Text, Name = header.Name,
+                                     Tags = header.Tags.Select(x => x.Name) };
 
-            return serializer.Serialize(header);
+            return serializer.Serialize(simpleHeader);
         }
 
         public string EstimateCreative(int id, double rating)

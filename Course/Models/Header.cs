@@ -19,7 +19,7 @@ namespace Course.Models
         [DataType(DataType.MultilineText)]
         public string Text { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
-        public Creative Creative { get; set; }
+        public virtual Creative Creative { get; set; }
 
         public Header()
         {
