@@ -213,6 +213,34 @@
     <Compile Include="Migrations\201611121139576_migration.Designer.cs">
       <DependentUpon>201611121139576_migration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611151559416_cascade_delete_header2.cs" />
+    <Compile Include="Migrations\201611151559416_cascade_delete_header2.Designer.cs">
+      <DependentUpon>201611151559416_cascade_delete_header2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611151806491_cascade_delete_ratings.cs" />
+    <Compile Include="Migrations\201611151806491_cascade_delete_ratings.Designer.cs">
+      <DependentUpon>201611151806491_cascade_delete_ratings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611151811071_cascade_delete_creatives.cs" />
+    <Compile Include="Migrations\201611151811071_cascade_delete_creatives.Designer.cs">
+      <DependentUpon>201611151811071_cascade_delete_creatives.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611171237249_header_order_column.cs" />
+    <Compile Include="Migrations\201611171237249_header_order_column.Designer.cs">
+      <DependentUpon>201611171237249_header_order_column.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611171837092_badge_url.cs" />
+    <Compile Include="Migrations\201611171837092_badge_url.Designer.cs">
+      <DependentUpon>201611171837092_badge_url.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611171846119_badge_order.cs" />
+    <Compile Include="Migrations\201611171846119_badge_order.Designer.cs">
+      <DependentUpon>201611171846119_badge_order.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611211723239_badge-amount.cs" />
+    <Compile Include="Migrations\201611211723239_badge-amount.Designer.cs">
+      <DependentUpon>201611211723239_badge-amount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Badge.cs" />
@@ -239,6 +267,10 @@
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\1.png" />
+    <Content Include="Content\Images\10.png" />
+    <Content Include="Content\Images\3.png" />
+    <Content Include="Content\Images\5.png" />
     <Content Include="Content\jquery.rateyo.css" />
     <Content Include="Content\jquery.tagit.css" />
     <Content Include="Content\simplemde.min.css" />
@@ -289,6 +321,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Themes\Readable\bootstrap.css" />
     <Content Include="Content\edit.css" />
+    <Content Include="Content\user.css" />
     <Content Include="Content\view.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -315,6 +348,7 @@
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.rateyo.js" />
+    <Content Include="Scripts\jquery.tablesorter.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -380,6 +414,27 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611121139576_migration.resx">
       <DependentUpon>201611121139576_migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611151559416_cascade_delete_header2.resx">
+      <DependentUpon>201611151559416_cascade_delete_header2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611151806491_cascade_delete_ratings.resx">
+      <DependentUpon>201611151806491_cascade_delete_ratings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611151811071_cascade_delete_creatives.resx">
+      <DependentUpon>201611151811071_cascade_delete_creatives.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611171237249_header_order_column.resx">
+      <DependentUpon>201611171237249_header_order_column.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611171837092_badge_url.resx">
+      <DependentUpon>201611171837092_badge_url.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611171846119_badge_order.resx">
+      <DependentUpon>201611171846119_badge_order.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611211723239_badge-amount.resx">
+      <DependentUpon>201611211723239_badge-amount.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

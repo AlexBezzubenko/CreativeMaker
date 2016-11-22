@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
-
+ 
 using System.Collections.Generic;
 
 namespace Course.Models
@@ -14,6 +14,8 @@ namespace Course.Models
     {
         public virtual ICollection<Rating> Ratings { get; set; }
         public virtual ICollection<Badge> Badges { get; set; }
+
+        public virtual ICollection<Creative> Creatives { get; set; }
         public virtual DateTime RegistrationDate { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -25,9 +27,10 @@ namespace Course.Models
 
         public ApplicationUser()
         {
-            RegistrationDate = System.DateTime.Now;
+            RegistrationDate = DateTime.Now;
             Ratings = new List<Rating>();
             Badges = new List<Badge>();
+            Creatives = new List<Creative>();
         }
     }
 
@@ -52,6 +55,26 @@ namespace Course.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            /*modelBuilder.Entity<Header>()
+            .HasOptional(h => h.Creative)
+            .WithMany()
+            .WillCascadeOnDelete(true);*/
+
+            modelBuilder.Entity<ApplicationUser>()
+            .HasMany(x => x.Ratings)
+            .WithRequired(x => x.ApplicationUser)
+            .WillCascadeOnDelete();
+
+            modelBuilder.Entity<ApplicationUser>()
+            .HasMany(x => x.Creatives)
+            .WithRequired(x => x.ApplicationUser)
+            .WillCascadeOnDelete();
+
+            modelBuilder.Entity<Creative>()
+            .HasMany(x => x.Headers)
+            .WithRequired(x => x.Creative)
+            .WillCascadeOnDelete();
 
             modelBuilder.Entity<Header>().HasMany(h => h.Tags)
             .WithMany(t => t.Headers)

@@ -18,6 +18,7 @@ namespace Course.Models
         public string Name { get; set; }
         [DataType(DataType.MultilineText)]
         public string Text { get; set; }
+        public int Order { get; set; } = 1;
         public virtual ICollection<Tag> Tags { get; set; }
         public virtual Creative Creative { get; set; }
 

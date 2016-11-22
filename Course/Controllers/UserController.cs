@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using Course.Models;
@@ -27,6 +28,8 @@ namespace Course.Controllers
         {
             var currentUserId = User.Identity.GetUserId();
 
+            ViewBag.User = db.Users.Find(currentUserId);
+
             ViewBag.Creatives = db.Creatives.Where(x => x.ApplicationUser.Id == currentUserId)
                                 .Include(x => x.ApplicationUser).Include(x => x.Headers);
             ViewBag.User = db.Users.Find(currentUserId);
@@ -46,37 +49,43 @@ namespace Course.Controllers
             Creative creative = new Creative();
             creative.Name = name;
             creative.ApplicationUser = currentUser;
-
             db.Creatives.Add(creative);
+
+            Award(currentUser);
             db.SaveChanges();
 
             return creative.Id;
         }
 
+        public void Award(ApplicationUser user) {
+            var badge = db.Badges.FirstOrDefault(x => x.Amount == user.Creatives.Count); 
+            if (badge != null && !user.Badges.Contains(badge))
+            {
+                user.Badges.Add(badge);
+            }           
+        }
+
         [Authorize]
-        public ActionResult AddHeader(int id)
+        [HttpGet]
+        public ActionResult Delete(int id)
         {
             Creative creative = db.Creatives.Find(id);
             if (creative == null)
             {
                 return HttpNotFound();
             }
+            db.Creatives.Remove(creative);
             try
             {
-                var header = new Header();
-
-                db.Headers.Add(header);
-                creative.Headers.Add(header);
-
                 db.SaveChanges();
-
-                return PartialView("~/Views/User/Header.cshtml", header);
             }
-            catch (DbEntityValidationException e)
+            catch(Exception e)
             {
-                throw;
+
             }
+            return RedirectToAction("Index");
         }
+
 
         [Authorize]
         [HttpGet]
@@ -87,6 +96,9 @@ namespace Course.Controllers
             {
                 return HttpNotFound();
             }
+            creative.LastEditTime = DateTime.Now;
+            db.Entry(creative).State = EntityState.Modified;
+            db.SaveChanges();
             ViewBag.Tags = db.Tags.Select(x => x.Name).Distinct();
             return View(creative);
         }
@@ -107,13 +119,110 @@ namespace Course.Controllers
 
 
         [Authorize]
-        [HttpPost]
         public void ChangeCreativeName(long Id, string Name)
         {
             Creative creative = db.Creatives.Find(Id);
             creative.Name = Name;
 
             db.Entry(creative).State = EntityState.Modified;
+            db.SaveChanges();
+            return;
+        }
+
+        public string SetHeaderContext(int id)
+        {
+            var header = db.Headers.Find(id);
+            var serializer = new JavaScriptSerializer();
+            var simpleHeader = new
+            {
+                Id = header.Id,
+                Text = header.Text,
+                Name = header.Name,
+                Tags = header.Tags.Select(x => x.Name)
+            };
+
+            return serializer.Serialize(simpleHeader);
+        }
+
+        [Authorize]
+        public ActionResult AddHeader(long id)
+        {
+            Creative creative = db.Creatives.Find(id);
+            if (creative == null)
+            {
+                return HttpNotFound();
+            }
+            try
+            {
+                var header = new Header();
+                header.Order = creative.Headers.Count + 1;
+
+                db.Headers.Add(header);
+                creative.Headers.Add(header);
+
+                db.SaveChanges();
+
+                return PartialView("~/Views/User/Header.cshtml", header);
+            }
+            catch (DbEntityValidationException e)
+            {
+                throw;
+            }
+        }
+
+        [Authorize]
+        public void DeleteHeader(long id)
+        {
+            Header header = db.Headers.Find(id);
+            
+            try
+            {
+                db.Headers.Remove(header);
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                throw;
+            }
+        }
+
+
+
+        public void UpdateHeader(long Id, string Name, string Text, List<string> Tags)
+        {
+            Header header = db.Headers.Find(Id);
+            header.Name = Name;
+            header.Text = Text;
+            header.Tags.Clear();
+
+            if (Tags != null)
+            {
+                foreach (string tagName in Tags)
+                {
+                    Tag t = db.Tags.FirstOrDefault(x => x.Name == tagName);
+                    if (t == null)
+                    {
+                        t = new Tag() { Name = tagName };
+                        db.Tags.Add(t);
+                        db.SaveChanges();
+                    }
+                    header.Tags.Add(t);
+                }
+            }
+
+            db.Entry(header).State = EntityState.Modified;
+            db.SaveChanges();
+            return;
+        }
+
+        public void UpdateHeaderOrders(int[] headerOrders)
+        {
+            for (int i = 0; i < headerOrders.Length; i++)
+            {
+                Header header = db.Headers.Find(headerOrders[i]);
+                header.Order = i + 1;
+                db.Entry(header).State = EntityState.Modified;
+            }
             db.SaveChanges();
             return;
         }
@@ -154,15 +263,7 @@ namespace Course.Controllers
             return View(creative);
         }
 
-        public string SetHeaderContext(int id)
-        {
-            var header = db.Headers.Find(id);
-            var serializer = new JavaScriptSerializer();
-            var simpleHeader = new { Text = header.Text, Name = header.Name,
-                                     Tags = header.Tags.Select(x => x.Name) };
-
-            return serializer.Serialize(simpleHeader);
-        }
+        
 
         public string EstimateCreative(int id, double rating)
         {

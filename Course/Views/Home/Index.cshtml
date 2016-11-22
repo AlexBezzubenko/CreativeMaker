@@ -16,7 +16,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-6">
+    <div id="popularCreative" class="col-md-12">
         <h2>Popular</h2>
         <table class="table table-striped table-hover">
             @foreach (Creative item in ViewBag.PopularCreatives)
@@ -50,7 +50,7 @@
             }
         </table>
     </div>
-    <div class="col-md-6">
+    <div id="lastEditedCreative" class="col-md-12">
         <h2>Last Edited</h2>
         <table class="table table-striped table-hover">
             @foreach (Creative item in ViewBag.LastCreatives)

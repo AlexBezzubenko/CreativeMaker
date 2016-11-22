@@ -1,4 +1,10 @@
-﻿@model Course.Models.Creative
+﻿@using Course.Models;
+@model Creative
+
+@{ 
+    List<Header> Headers = new List<Header>(Model.Headers.OrderBy(x => x.Order));
+}
+
 
 @{
     <link rel="stylesheet" type="text/css" href="~/Content/edit.css" />
@@ -17,18 +23,18 @@
     </div>
 
     <div id="creative_name_block" class="col-md-9">
-        @using (Html.BeginForm())
-        { 
+        @using (Html.BeginForm("ChangeCreativeName", "User", FormMethod.Post, new { id = "nameform" }))
+        {
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div id="creative_name_input">
+                @Html.HiddenFor(model => model.Id)
+                <span id='name_label'>@Model.Name</span>
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { autocomplete = "off", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
 
             <div id="creative_name_edit">
-                <button type="button" class="btn btn-github" id="edit_creative_name_button">
                     <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
-                </button>
             </div>
         }
     </div>
@@ -45,32 +51,68 @@
 <div id="headers_with_content" class="row">
     <div id="headers" class="col-md-3">
         <ul id="headers_list" class="list-group">
-            @foreach (var header in Model.Headers)
+            @for (int i = 0; i < Headers.Count; i++)
             {
-                <li class="header list-group-item" value="@header.Id">
-                    @Model.Headers.IndexOf(header) @header.Name @header.Id
+                string active = "active";
+                if (i != 0)
+                {
+                    active = "";
+                }
+                <li class="header list-group-item @active" value="@Headers[i].Id">
+                    @i @Headers[i].Name @Headers[i].Id
+                    <button class="delete_header">
+                        <i class="fa fa-2x fa-times" aria-hidden="true"></i>
+                    </button>
                 </li>
             }
         </ul>
     </div>
-    
-    @if (Model.Headers.Count > 0)
-    {
-        <div id="header_content" class="col-md-9">
-            <h3>@Model.Headers[0].Name</h3>
+    <div id="header_content" class="col-md-9">
+        @if (Headers.Count > 0)
+        {
+            <div id="header_content_header">
+                <input type="hidden" id="header_id" value="@Headers[0].Id"/>
+                <div id="header_name">
+                    <h3>@Headers[0].Name</h3>
+                    <input type="text" id="header_name_input" value="@Headers[0].Name" 
+                           autocomplete="off" class="form-control text-box single-line valid" />
+                    <div id="header_name_edit">
+                        <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-github" id="update_header">
+                    <i class="fa fa-save fa-2x" aria-hidden="true"></i>
+                </button>
+            </div>
             <ul id="myTags">
-                @foreach (var tag in Model.Headers[0].Tags)
+                @foreach (var tag in Headers[0].Tags)
                 {
                     <li>@tag.Name</li>
                 }
             </ul>
-            <textarea id="header_text" class="header_text">@Model.Headers[0].Text</textarea>
-        </div>
-    }
-    else
-    {
-        <div id="header_content" class="col-md-9"/>
-    }
+            <textarea id="header_text" class="header_text">@Headers[0].Text</textarea>
+        }
+        else
+        {
+            <div id="header_content_header">
+                <input type="hidden" id="header_id" value="" />
+                <div id="header_name">
+                    <h3></h3>
+                    <input type="text" id="header_name_input" value=""
+                           autocomplete="off" class="form-control text-box single-line valid" />
+                    <div id="header_name_edit">
+                        <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-github" id="update_header">
+                    <i class="fa fa-save fa-2x" aria-hidden="true"></i>
+                </button>
+            </div>
+            <ul id="myTags">
+            </ul>
+            <textarea id="header_text" class="header_text"></textarea>
+        }
+    </div>
 </div>
 
 
@@ -82,6 +124,77 @@
     <script src="~/Scripts/simplemde.min.js" type="text/javascript" charset="utf-8"></script>
     <script>
         $(document).ready(function () {
+            $('#nameform').on('keyup keypress', function (e) {
+                var keyCode = e.keyCode || e.which;
+                if (keyCode === 13) {
+                    e.preventDefault();
+                    if ($('#Name').val() != "@Model.Name" && $("#nameform").validate().element("#Name"))
+                    {
+                        console.log('post change name');
+                        $.ajax({
+                            async: false,
+                            data: { id: "@Model.Id", Name: $('#Name').val() },
+                            url: '/User/ChangeCreativeName'
+                        });
+                    }
+                    $('#Name').blur();
+                    return false;
+                }
+            });
+
+
+            $('#Name').blur(function () {
+                if ($('#Name').val().trim() != '') {
+                    $('#Name').hide();
+                    $('#name_label').html($('#Name').val());
+
+                    if ($('#Name').val() != "@Model.Name" && $("#nameform").validate().element("#Name"))
+                    {
+                        console.log('post change name');
+                        $.ajax({
+                            async: false,
+                            data: { id: "@Model.Id", Name: $('#Name').val() },
+                            url: '/User/ChangeCreativeName'
+                        });
+                    }
+                }
+            });
+
+            $('#creative_name_edit > i').click(function () {
+
+                if ($('#name_label').html().trim() != '') {
+
+                    $('#Name').show();
+
+                    $('#Name').val($('#name_label').html());
+
+                    $('#name_label').html('');
+                    $('#Name').focus();
+                }
+            });
+
+
+            $('#header_name_input').blur(function () {
+                if ($('#header_name_input').val().trim() != '') {
+                    $('#header_name_input').hide();
+                    $('#header_name > h3').html($('#header_name_input').val());
+                }
+            });
+
+            $('#header_name_edit > i').click(function () {
+
+                if ($('#header_name > h3').html().trim() != '') {
+
+                    $('#header_name_input').show();
+
+                    $('#header_name_input').val($('#header_name > h3').html());
+
+                    $('#header_name > h3').html('');
+                    $('#header_name_input').focus();
+                }
+            });
+
+
             var simplemde = new SimpleMDE({
                 element: document.getElementById("header_text"),
                 spellChecker: false,
@@ -98,17 +211,41 @@
             var myArray = [];
 
              @foreach (var tag in ViewBag.Tags)
-            {
+             {
                 @:myArray.push("@tag");
             }
             $('#myTags').tagit({
                 availableTags: myArray
             });
             $("#headers_list").sortable({
-                axis:'y'
+                axis: 'y',
+                update: function (event, ui) {
+                    var headers_id = [];
+                    var headers = $("#headers_list").children(".header");
+                    headers.each(function (idx, li) {
+                        var header = $(li);
+                        headers_id.push(header.val());
+                    });
+                    $.ajax({
+                        async: false,
+                        data: { headerOrders: headers_id },
+                        traditional: true,
+                        url: '/User/UpdateHeaderOrders'
+                    }).success(function () {});
+                }
+                /*change: function (event, ui) { }, //save the sort
+                start: function (event, ui) {
+                    $(ui.item).css("opacity", "1.0");
+                },
+                stop: function (event, ui) {
+                    $(ui.item).css("opacity", "0.8");
+                }*/
             });
-            $('.header').click(function () {
-                var index = $(this).val();
+
+            $("#headers").delegate('.header', 'click', function (e) {
+                $('.active').removeClass('active');
+                $(this).addClass('active');
+                var index = $(event.target).val();
                 $.ajax({
                     async: false,
                     data: { id: index },
@@ -118,43 +255,80 @@
                     var headerJson = JSON.parse(header);
                     console.log(headerJson);
                     simplemde.value(headerJson.Text);
+                    $('#header_name_input').blur();
                     $('#header_content h3').html(headerJson.Name);
+
 
                     $("#myTags").tagit("removeAll");
                     headerJson.Tags.forEach(function (item, i, arr) {
                         $("#myTags").tagit("createTag", item);
                     });
+                    $('#header_id').val(headerJson.Id);
                 });
+
             });
-            $("#edit_creative_name_button").on('click', function () {
 
-                var creative_name = $('#Name').val();
-                var data = {Id:@Model.Id, Name: creative_name };
-
+            $("#headers").delegate(".delete_header", "click", function (e) {
+                var header_li = $(this).closest(".header");
+                var header_id = header_li.val();
+                
                 $.ajax({
-                    type: 'POST',
                     async: false,
-                    data: data,
-                    url: '/User/ChangeCreativeName'
-                }).success(function (id) {
-                    window.location.reload(true);
-                    //window.location.href = "/User/Edit/" + id;
+                    data: { id: header_id },
+                    url: "/User/DeleteHeader"
+                }).success(function () {
+                    if (header_li.hasClass("active")) {
+                        simplemde.value("");
+                        $('#header_name_input').blur();
+                        $('#header_content h3').html("");
+
+                        $("#myTags").tagit("removeAll");
+                        $('#header_id').val("");
+                    }
+                    header_li.remove();
                 });
-                //console.log("--text--" + name);
+
             });
+
+           
+
             $("#add_header").on('click', function () {
-                @{
-                    var newHeader = new Course.Models.Header();
-                    Model.Headers.Add(newHeader);
-                }
-                @*$.ajax({
+                $.ajax({
                     async: false,
                     data: { id: "@Model.Id" },
                     url: '/User/AddHeader'
                 }).success(function (partialView) {
-                    $('#headers_list').append(partialView);
-                    $("#headers_list").accordion("refresh");
-                });*@
+                    $('.active').removeClass('active');
+                    var newHeader = $(partialView).appendTo('#headers_list');
+                    newHeader.addClass('active');
+                    $("#headers_list").sortable("refresh");
+
+                    $('#header_id').val(newHeader.val());
+                    $('#header_name > h3').html(newHeader.text());
+                    simplemde.value("");
+                    $("#myTags").tagit("removeAll");
+                });
+            });
+            $("#update_header").on('click', function () {
+                var Id = $('#header_id').val();
+                if (!Id)
+                {
+                    return;
+                }
+                var Name = $('#header_name > h3').html();
+                var Text = simplemde.value();
+                var Tags = $("#myTags").tagit("assignedTags");
+
+                $(".header[value='"+ Id + "']").text(Name);
+
+                var data = { Id: Id, Name: Name, Text: Text, Tags: Tags }
+                console.log(data);
+                $.ajax({
+                    async: false,
+                    data: data,
+                    traditional:true,
+                    url: '/User/UpdateHeader'
+                });
             });
 
         });

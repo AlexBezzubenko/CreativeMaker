@@ -2,6 +2,7 @@
 /// <reference path="ai.0.22.19-build00125.min.js" />
 /// <reference path="bootstrap.js" />
 /// <reference path="jquery.rateyo.js" />
+/// <reference path="jquery.tablesorter.min.js" />
 /// <reference path="jquery.tagcanvas.min.js" />
 /// <reference path="jquery.validate.js" />
 /// <reference path="jquery.validate.unobtrusive.js" />

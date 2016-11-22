@@ -10,9 +10,16 @@ namespace Course.Models
     {
         [Required]
         public long Id { get; set; }
+
         [DataType(DataType.Text)]
         [StringLength(maximumLength: 20, MinimumLength = 3)]
+
         public string Name { get; set; }
+
+        [DataType(DataType.ImageUrl)]
+        public string ImageUrl { get; set; }
+        public int Amount { get; set; } = 0;
+        public int Order { get; set; } = 1;
         public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
 
         public Badge()

@@ -87,3 +87,10 @@ E:\D\itransition\Course-Project\Course\obj\Debug\Course.Resources.Resource.resou
 E:\D\itransition\Course-Project\Course\obj\Debug\Course.Resources.Resource.en.resources
 E:\D\itransition\Course-Project\Course\obj\Debug\en\Course.resources.dll
 E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.migration.resources
+E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.cascade_delete_header2.resources
+E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.cascade_delete_ratings.resources
+E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.cascade_delete_creatives.resources
+E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.header_order_column.resources
+E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.badge_url.resources
+E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.badge_order.resources
+E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.badgeamount.resources

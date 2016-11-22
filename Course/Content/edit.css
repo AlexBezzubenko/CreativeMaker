@@ -1,4 +1,7 @@
-﻿#page_header{
+﻿body{
+    background-color:black;
+}
+#page_header{
     margin-bottom:20px;
 } 
 
@@ -15,6 +18,8 @@
  
 #creative_name_input{
      display:inline-block;
+     font-size:30px;
+     color:white;
 }
 
 #creative_name_input input{
@@ -27,8 +32,20 @@
     display:inline-block;
      position:relative;
      top:-6px;
+     
+}
+#creative_name_edit > i{
+    font-size:20px;
+    color:white;
+}
+#Name{
+    display:none;
 }
 
+.field-validation-error {
+   display: none;
+   text-align:right;
+}
 
 
 
@@ -38,12 +55,12 @@
  
 #headers{
     padding:0px;
-    background-color:yellow;
+    background-color:white;
 }
 
 #header_content{
     min-height:700px;
-    background-color:red;
+    background-color:white;
 }
 
 .header_text{
@@ -54,5 +71,48 @@
 
 #headers_with_content{
 }
- 
+#header_content_header{
+    background-color:white;
+}
+#header_name{
+    display:inline-block;
+    margin-top:0px;
+    margin-top:12px;
+    margin-bottom:12px;
+}
+#header_name > h3{
+    display:inline-block;
+    margin:0;
+}
 
+#header_name_edit{
+    display:inline-block;
+}
+
+#header_content_header > button{
+    margin-top:5px;
+    display:inline-block;
+    float:right;
+
+} 
+
+#header_name_input{
+    font-size:20px;
+    max-width:260px;
+    width:260px;
+    height:auto;
+    display:none;
+}
+
+.delete_header {
+    float:right;
+    padding:0px;
+    background:none;
+    border:none;
+    margin:0;
+    display:none;
+}
+
+.header:hover .delete_header{  
+    display:block;
+}
