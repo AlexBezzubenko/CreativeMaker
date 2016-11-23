@@ -94,3 +94,7 @@ E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.header_order_
 E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.badge_url.resources
 E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.badge_order.resources
 E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.badgeamount.resources
+E:\D\itransition\Course-Project\Course\bin\ICSharpCode.SharpZipLib.dll
+E:\D\itransition\Course-Project\Course\bin\Lucene.Net.dll
+E:\D\itransition\Course-Project\Course\bin\Lucene.Net.pdb
+E:\D\itransition\Course-Project\Course\bin\Lucene.Net.xml

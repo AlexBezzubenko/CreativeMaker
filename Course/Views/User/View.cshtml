@@ -47,6 +47,21 @@
     }
 </div>
 
+<div id="view_settings">
+    <a href="#" onclick="return false;" class="increaseFont"><i class="fa fa-2x fa-search-plus" aria-hidden="true"></i></a>
+    <a href="#" onclick="return false;" class="decreaseFont"><i class="fa fa-2x fa-search-minus" aria-hidden="true"></i></a>
+    <a href="#" onclick="return false;" class="resetFont"><i class="fa fa-2x fa-refresh" aria-hidden="true"></i></a>
+                
+    <a href="#" onclick="return false;" class="increasePanelWidth">
+        <i class="fa fa-2x fa-arrow-left" aria-hidden="true"></i>
+        <i class="fa fa-2x fa-arrow-right" aria-hidden="true"></i>
+    </a>
+    <a href="#" onclick="return false;" class="decreasePanelWidth">
+        <i class="fa fa-2x fa-arrow-right" aria-hidden="true"></i>
+        <i class="fa fa-2x fa-arrow-left" aria-hidden="true"></i>
+    </a>
+</div>
+
 <div id="headers">
     @foreach(var header in Model.Headers)
     {
@@ -65,7 +80,49 @@
 
 @section Scripts {
     <script>
+        var changeFontSize = function (increaseFont) {
+            var $element = $('.panel-body > p');
+            var newFontSize;
+            var currentFontSize = $element.css('font-size');
+            var currentFontSizeNum = parseFloat(currentFontSize, 10);
+
+            if (increaseFont) {
+                $element.css('font-size', 0);
+                newFontSize = currentFontSizeNum * 1.2;
+            } else {
+                newFontSize = currentFontSizeNum * 0.8;
+            }
+
+            $element.css('font-size', newFontSize);
+        };
+
         $(document).ready(function () {
+            // Reset Font Size
+            var originalFontSize = $('.panel-body > p').css('font-size');
+
+            $(".resetFont").click(function () {
+                $('.panel-body > p').css('font-size', originalFontSize);
+                $('.panel').animate({ marginLeft: '0%', marginRight: '0%' }, 1000);
+                $('#view_settings').animate({ marginLeft: '0%', marginRight: '0%' }, 1000);
+            });
+            // Increase Font Size
+            $(".increaseFont").on('click', function () {
+                changeFontSize(true);
+            });
+            // Decrease Font Size
+            $(".decreaseFont").on('click', function () {
+                changeFontSize(false);
+            });
+
+            $(".increasePanelWidth").on('click', function () {
+                $('.panel').animate({ marginLeft: '0%', marginRight: '0%' }, 1000);
+                $('#view_settings').animate({ marginLeft: '0%', marginRight: '0%' }, 1000);
+            });
+            $(".decreasePanelWidth").on('click', function () {
+                $('.panel').animate({ marginLeft: '20%', marginRight: '20%' }, 1000);
+                $('#view_settings').animate({ marginLeft: '20%', marginRight: '20%' }, 1000);
+            });
+
             var rate = @Model.Rating.ToString().Replace(',', '.');
 
             $("#rateYoGlobalDiv").rateYo({
@@ -95,6 +152,7 @@
                       $('#rateText span').html(newRating + " @Resources.Resource.Of 5");
                   });
               });
+           
         });
 
     </script>

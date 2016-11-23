@@ -1,4 +1,8 @@
-﻿.medal_image {
+﻿body{
+    background-color:black;
+}
+
+.medal_image {
     width: 97px;
     height:156px;
 }

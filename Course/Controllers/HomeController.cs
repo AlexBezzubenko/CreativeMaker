@@ -40,7 +40,7 @@ namespace Course.Controllers
         {
             HttpCookie cookie = Request.Cookies["lang"];
             if (cookie != null)
-                cookie.Value = lang;   // если куки уже установлено, то обновляем значение
+                cookie.Value = lang;    
             else
             {
 
@@ -64,11 +64,12 @@ namespace Course.Controllers
             return Redirect(Request.UrlReferrer.AbsolutePath);
         }
 
-        public ActionResult Contact()
+        public ActionResult Search(string query)
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            var creatives = db.Creatives.Where(x=>x.Name.Contains(query)).Include(x => x.ApplicationUser)
+                                .Include(x => x.Headers);
+            return View(creatives);
+            //return RedirectToAction("Index");
         }
     }
 }

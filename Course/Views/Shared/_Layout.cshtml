@@ -27,7 +27,6 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink(Resources.Resource.Home, "Index", "Home")</li>
-                    <li>@Html.ActionLink(Resources.Resource.Contacts, "Contact", "Home")</li>
                     @if (this.User.IsInRole("admin"))
                     {
                         <li>@Html.ActionLink(Resources.Resource.Admin, "Index", "Admin")</li>
@@ -37,25 +36,19 @@
                         <li>@Html.ActionLink(Resources.Resource.User, "Index", "User")</li>
                     }
                 </ul>
-                @*<form class="navbar-form navbar-left" role="search">
-                       
+                 
+                <form action="/Home/Search" method="get" class="navbar-form navbar-left" role="search">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="@Resources.Resource.Search">
+                        <input name="query" type="text" class="form-control" placeholder="@Resources.Resource.Search">
                     </div>
-                    <button type="submit" class="btn">
-                        @Resources.Resource.SearchButton
-                    </button>
-                </form>*@
+                    
+                </form>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
