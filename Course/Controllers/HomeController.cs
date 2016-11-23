@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
 using Course.Models;
+using Course.Lucene;
 using Course.Filters;
 
 using System.Data.Entity;
@@ -66,9 +67,11 @@ namespace Course.Controllers
 
         public ActionResult Search(string query)
         {
+            var result = LuceneSearch.Search(query, 50);
+
             var creatives = db.Creatives.Where(x=>x.Name.Contains(query)).Include(x => x.ApplicationUser)
                                 .Include(x => x.Headers);
-            return View(creatives);
+            return View(result);
             //return RedirectToAction("Index");
         }
     }

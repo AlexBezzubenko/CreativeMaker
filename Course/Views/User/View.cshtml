@@ -63,25 +63,39 @@
 </div>
 
 <div id="headers">
-    @foreach(var header in Model.Headers)
+    @foreach (var header in Model.Headers)
     {
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">@header.Name @header.Id</h3>
             </div>
             <div class="panel-body">
-                <p>
-                    @header.Text
-                </p>
+                @Html.Raw(Markdig.Markdown.ToHtml(header.Text))
             </div>
         </div>
-    }
+                    }
 </div>
 
 @section Scripts {
     <script>
         var changeFontSize = function (increaseFont) {
-            var $element = $('.panel-body > p');
+            $('.panel-body').find('*').each(function () {
+                var newFontSize;
+                var currentFontSize = $(this).css('font-size');
+                var currentFontSizeNum = parseFloat(currentFontSize, 10);
+
+                if (increaseFont) {
+                    $(this).css('font-size', 0);
+                    newFontSize = currentFontSizeNum * 1.25;
+                } else {
+                    newFontSize = currentFontSizeNum * 0.8;
+                }
+
+                $(this).css('font-size', newFontSize);
+            });
+        };
+        /*var changeFontSize = function (increaseFont) {
+            var $element = $('.panel-body *');
             var newFontSize;
             var currentFontSize = $element.css('font-size');
             var currentFontSizeNum = parseFloat(currentFontSize, 10);
@@ -94,14 +108,14 @@
             }
 
             $element.css('font-size', newFontSize);
-        };
+        };*/
 
         $(document).ready(function () {
             // Reset Font Size
-            var originalFontSize = $('.panel-body > p').css('font-size');
+            var originalFontSize = $('.panel-body *').css('font-size');
 
             $(".resetFont").click(function () {
-                $('.panel-body > p').css('font-size', originalFontSize);
+                //$('.panel-body *').css('font-size', originalFontSize);
                 $('.panel').animate({ marginLeft: '0%', marginRight: '0%' }, 1000);
                 $('#view_settings').animate({ marginLeft: '0%', marginRight: '0%' }, 1000);
             });

@@ -4,6 +4,7 @@ using Owin;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Course.Models;
+using System.Data.Entity;
 
 [assembly: OwinStartupAttribute(typeof(Course.Startup))]
 namespace Course
@@ -14,6 +15,10 @@ namespace Course
         {
             ConfigureAuth(app);
             var context = new ApplicationDbContext();
+            Lucene.LuceneSearch.BuildIndex(context.Headers.Include(x => x.Creative).Include(x => x.Creative.ApplicationUser)
+                                .Include(x => x.Tags));
+
+
             var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 

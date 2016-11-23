@@ -241,7 +241,14 @@ namespace Course.Controllers
             {
                 creative.Views++;
                 db.Entry(creative).State = EntityState.Modified;
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch(Exception e)
+                {
+                    throw e;
+                }
             }
 
             bool isOwnerOrNotAuthenticated = isOwner || !User.Identity.IsAuthenticated;

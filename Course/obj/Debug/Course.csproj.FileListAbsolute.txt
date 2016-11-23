@@ -98,3 +98,8 @@ E:\D\itransition\Course-Project\Course\bin\ICSharpCode.SharpZipLib.dll
 E:\D\itransition\Course-Project\Course\bin\Lucene.Net.dll
 E:\D\itransition\Course-Project\Course\bin\Lucene.Net.pdb
 E:\D\itransition\Course-Project\Course\bin\Lucene.Net.xml
+E:\D\itransition\Course-Project\Course\bin\Markdig.dll
+E:\D\itransition\Course-Project\Course\bin\Markdig.xml
+E:\D\itransition\Course-Project\Course\bin\HtmlAgilityPack.dll
+E:\D\itransition\Course-Project\Course\bin\HtmlAgilityPack.pdb
+E:\D\itransition\Course-Project\Course\bin\HtmlAgilityPack.xml
