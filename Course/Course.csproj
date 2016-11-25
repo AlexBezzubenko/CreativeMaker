@@ -264,6 +264,7 @@
     <Compile Include="Models\Creative.cs" />
     <Compile Include="Models\CreativeResult.cs" />
     <Compile Include="Models\Header.cs" />
+    <Compile Include="Models\HomeViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Tag.cs" />
@@ -282,17 +283,19 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-social.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Libs\bootstrap-social.css" />
+    <Content Include="Content\Libs\bootstrap.css" />
+    <Content Include="Content\Libs\bootstrap.min.css" />
+    <Content Include="Content\Libs\hint.min.css" />
+    <Content Include="Content\Site\HomeIndex.css" />
     <Content Include="Content\Images\1.png" />
     <Content Include="Content\Images\10.png" />
     <Content Include="Content\Images\3.png" />
     <Content Include="Content\Images\5.png" />
-    <Content Include="Content\jquery.rateyo.css" />
-    <Content Include="Content\jquery.tagit.css" />
-    <Content Include="Content\simplemde.min.css" />
-    <Content Include="Content\tagit.ui-zendesk.css" />
+    <Content Include="Content\Libs\jquery.rateyo.css" />
+    <Content Include="Content\Libs\jquery.tagit.css" />
+    <Content Include="Content\Libs\simplemde.min.css" />
+    <Content Include="Content\Libs\tagit.ui-zendesk.css" />
     <Content Include="Content\Themes\base\accordion.css" />
     <Content Include="Content\Themes\base\all.css" />
     <Content Include="Content\Themes\base\autocomplete.css" />
@@ -335,17 +338,18 @@
     <Content Include="Content\Themes\base\theme.css" />
     <Content Include="Content\Themes\base\tooltip.css" />
     <Content Include="Content\Themes\Default\bootstrap.css" />
-    <Content Include="Content\font-awesome.css" />
-    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Libs\font-awesome.css" />
+    <Content Include="Content\Libs\font-awesome.min.css" />
     <Content Include="Content\Themes\Readable\bootstrap.css" />
-    <Content Include="Content\edit.css" />
-    <Content Include="Content\user.css" />
-    <Content Include="Content\view.css" />
+    <Content Include="Content\Site\Edit.css" />
+    <Content Include="Content\Themes\Readable\Site.css" />
+    <Content Include="Content\Site\User.css" />
+    <Content Include="Content\Site\View.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\Themes\Default\Site.css" />
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -375,6 +379,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\simplemde.min.js" />
+    <Content Include="Scripts\Site\HomeIndex.js" />
     <Content Include="Scripts\tag-it.js" />
     <Content Include="Scripts\jquery.tagcanvas.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -389,7 +394,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />

@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CreativeMaker.
+        /// </summary>
+        public static string ApplicationName {
+            get {
+                return ResourceManager.GetString("ApplicationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Отмена.
         /// </summary>
         public static string Cancel {
@@ -106,6 +115,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Создать новый креатив.
+        /// </summary>
+        public static string CreateNewCreative {
+            get {
+                return ResourceManager.GetString("CreateNewCreative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Создать новую главу.
+        /// </summary>
+        public static string CreateNewHeader {
+            get {
+                return ResourceManager.GetString("CreateNewHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Привет.
         /// </summary>
         public static string Hello {
@@ -120,6 +147,15 @@ namespace Resources {
         public static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Последние отредактированные.
+        /// </summary>
+        public static string LastEdited {
+            get {
+                return ResourceManager.GetString("LastEdited", resourceCulture);
             }
         }
         
@@ -169,11 +205,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Популярные.
+        /// </summary>
+        public static string Popular {
+            get {
+                return ResourceManager.GetString("Popular", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Зарегистрироваться.
         /// </summary>
         public static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Сохранить содержимое главы.
+        /// </summary>
+        public static string SaveHeaderContent {
+            get {
+                return ResourceManager.GetString("SaveHeaderContent", resourceCulture);
             }
         }
         

@@ -6,7 +6,6 @@ namespace Course
 {
     public class BundleConfig
     {
-        // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
@@ -15,8 +14,6 @@ namespace Course
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
@@ -45,25 +42,21 @@ namespace Course
             bundles.Add(new ScriptBundle("~/bundles/rateyo").Include(
                     "~/Scripts/jquery.rateyo.js"));
             bundles.Add(new StyleBundle("~/Content/rateyo").Include(
-                     "~/Content/jquery.rateyo.css"));
+                     "~/Content/Libs/jquery.rateyo.css"));
 
-          
-
-            /*bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/bootstrap-social.css",
-                      "~/Content/font-awesome.css",
-                      "~/Content/site.css"));*/
+            bundles.Add(new StyleBundle("~/Content/hint").Include(
+                     "~/Content/Libs/hint.min.css"));
 
             foreach (var theme in Bootstrap.Themes)
             {
                 var stylePath = string.Format("~/Content/Themes/{0}/bootstrap.css", theme);
+                var siteStylePath = string.Format("~/Content/Themes/{0}/Site.css", theme);
 
                 bundles.Add(new StyleBundle(Bootstrap.Bundle(theme)).Include(
                         stylePath,
-                        "~/Content/bootstrap-social.css",
-                        "~/Content/font-awesome.css",
-                        "~/Content/site.css"));
+                        "~/Content/Libs/bootstrap-social.css",
+                        "~/Content/Libs/font-awesome.css",
+                        siteStylePath));
             }
         }
     }

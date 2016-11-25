@@ -12,9 +12,6 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Course.Models;
 
- 
- 
-
 namespace Course
 {
     public class EmailService : IIdentityMessageService

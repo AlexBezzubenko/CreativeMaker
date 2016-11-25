@@ -12,12 +12,13 @@
 <div id="medals">
     @foreach(var badge in User.Badges.OrderBy(x => x.Order))
     { 
-        <img class="medal_image" src="@Url.Content(@badge.ImageUrl)" />
+        <img class="medal_image" aria-label="@badge.Name" src="@Url.Content(@badge.ImageUrl)" />
     }
     
 </div>
 
-<button type="button" class="btn btn-github" data-toggle="modal" data-target="#createModal">
+<button type="button" class="btn btn-github hint--bottom hint--error" 
+        aria-label="@Resources.Resource.CreateNewCreative" data-toggle="modal" data-target="#createModal">
     <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
 </button>
 

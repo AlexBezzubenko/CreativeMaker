@@ -1,13 +1,16 @@
 ﻿@using Course.Models;
-@{
-    ViewBag.Title = "Home Page";
+@model HomeViewModels
 
+@{
+    ViewBag.Title = Resources.Resource.ApplicationName;
 }
+
+<link rel="stylesheet" type="text/css" href="~/Content/Site/HomeIndex.css" />
 
 <div align="center" id="myCanvasContainer">
     <canvas width="600" height="400" style="background-color:black;" id="myCanvas">
         <p>Anything in here will be replaced on browsers that support the canvas element</p>
-        @foreach (Tag tag in ViewBag.Tags)
+        @foreach (Tag tag in Model.Tags)
         {
             @Html.ActionLink(tag.Name, "HeadersByTag", "Home", new { id = tag.Id }, null);
         }
@@ -17,9 +20,9 @@
 
 <div class="row">
     <div id="popularCreative" class="col-md-12">
-        <h2>Popular</h2>
+        <h2>@Resources.Resource.Popular</h2>
         <table class="table table-striped table-hover">
-            @foreach (Creative item in ViewBag.PopularCreatives)
+            @foreach (Creative item in Model.PopularCreatives)
             {
                 <tr class="success">
                     <td>
@@ -51,9 +54,9 @@
         </table>
     </div>
     <div id="lastEditedCreative" class="col-md-12">
-        <h2>Last Edited</h2>
+        <h2>@Resources.Resource.LastEdited</h2>
         <table class="table table-striped table-hover">
-            @foreach (Creative item in ViewBag.LastCreatives)
+            @foreach (Creative item in Model.LastCreatives)
             {
                 <tr class="success">
                     <td>
@@ -90,31 +93,5 @@
 
 @section Scripts {
     <script src="~/Scripts/jquery.tagcanvas.min.js" type="text/javascript"></script>
-    <script>
-        //http://www.goat1000.com/tagcanvas.php
-        $(document).ready(function () {
-            if (!$('#myCanvas').tagcanvas({
-                textColour: '#ffffff',
-                outlineThickness: 1,
-                maxSpeed: 0.1,
-                depth: 0.75,
-                clickToFront: 1000
-            })) {
-                // TagCanvas failed to load
-                $('#myCanvasContainer').hide();
-            }
-            $(".rateYo").rateYo({
-                starWidth: "30px",
-                halfStar: true,
-                onInit: function (rating, rateYoInstance) {
-                    var rate = $(this).parent().parent()
-                        .find('.itemRate').val().replace(',', '.');
-                    console.log("" + rate);
-                    $(this).rateYo("option", "rating", rate);
-                    $(this).rateYo("option", "readOnly", true);
-                }
-            });
-        });
-
-    </script>
+    <script src="~/Scripts/Site/HomeIndex.js" type="text/javascript"></script>
 }

@@ -120,6 +120,9 @@
   <data name="Admin" xml:space="preserve">
     <value>Админ</value>
   </data>
+  <data name="ApplicationName" xml:space="preserve">
+    <value>CreativeMaker</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Отмена</value>
   </data>
@@ -132,11 +135,20 @@
   <data name="Create" xml:space="preserve">
     <value>Создать</value>
   </data>
+  <data name="CreateNewCreative" xml:space="preserve">
+    <value>Создать новый креатив</value>
+  </data>
+  <data name="CreateNewHeader" xml:space="preserve">
+    <value>Создать новую главу</value>
+  </data>
   <data name="Hello" xml:space="preserve">
     <value>Привет</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Главная</value>
+  </data>
+  <data name="LastEdited" xml:space="preserve">
+    <value>Последние отредактированные</value>
   </data>
   <data name="LogIn" xml:space="preserve">
     <value>Войти</value>
@@ -153,8 +165,14 @@
   <data name="Of" xml:space="preserve">
     <value>из</value>
   </data>
+  <data name="Popular" xml:space="preserve">
+    <value>Популярные</value>
+  </data>
   <data name="Register" xml:space="preserve">
     <value>Зарегистрироваться</value>
+  </data>
+  <data name="SaveHeaderContent" xml:space="preserve">
+    <value>Сохранить содержимое главы</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Искать</value>

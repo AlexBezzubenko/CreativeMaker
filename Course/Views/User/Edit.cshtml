@@ -2,16 +2,16 @@
 @model Creative
 
 @{ 
+    ViewBag.Title = "Edit";
     List<Header> Headers = new List<Header>(Model.Headers.OrderBy(x => x.Order));
 }
 
 
-@{
-    <link rel="stylesheet" type="text/css" href="~/Content/edit.css" />
-    <link href="~/Content/jquery.tagit.css" rel="stylesheet" type="text/css">
-    <link href="~/Content/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
-    <link href="~/Content/simplemde.min.css" rel="stylesheet" type="text/css">
-}
+<link rel="stylesheet" type="text/css" href="~/Content/edit.css" />
+<link href="~/Content/jquery.tagit.css" rel="stylesheet" type="text/css">
+<link href="~/Content/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
+<link href="~/Content/simplemde.min.css" rel="stylesheet" type="text/css">
+
 
 <br />
 
@@ -41,10 +41,9 @@
 </div>
 
 
-
-
  <div>
-    <button type="button" class="btn btn-github" id="add_header">
+    <button type="button" class="btn btn-github hint--bottom" 
+            id="add_header" aria-label="@Resources.Resource.CreateNewHeader">
         <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
     </button>
 </div>
@@ -68,55 +67,43 @@
         </ul>
     </div>
     <div id="header_content" class="col-md-9">
-        @if (Headers.Count > 0)
-        {
-            <div id="header_content_header">
-                <input type="hidden" id="header_id" value="@Headers[0].Id"/>
-                <div id="header_name">
-                    <h3>@Headers[0].Name</h3>
-                    <input type="text" id="header_name_input" value="@Headers[0].Name" 
-                           autocomplete="off" class="form-control text-box single-line valid" />
-                    <div id="header_name_edit">
-                        <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-github" id="update_header">
-                    <i class="fa fa-save fa-2x" aria-hidden="true"></i>
-                </button>
-            </div>
-            <ul id="myTags">
-                @foreach (var tag in Headers[0].Tags)
-                {
-                    <li>@tag.Name</li>
-                }
-            </ul>
-            <textarea id="header_text" class="header_text">@Headers[0].Text</textarea>
+        @{ 
+            var header = new Header() {
+                Id = -1,
+                Name = "",
+                Text = ""
+            };
+            if(Headers.Count > 0)
+            {
+                header = Headers[0];
+            }
         }
-        else
-        {
-            <div id="header_content_header">
-                <input type="hidden" id="header_id" value="" />
-                <div id="header_name">
-                    <h3></h3>
-                    <input type="text" id="header_name_input" value=""
-                           autocomplete="off" class="form-control text-box single-line valid" />
-                    <div id="header_name_edit">
-                        <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
-                    </div>
+         
+        <div id="header_content_header">
+            <input type="hidden" id="header_id" value="@header.Id"/>
+            <div id="header_name">
+                <h3>@header.Name</h3>
+                <input type="text" id="header_name_input" value="@header.Name" 
+                        autocomplete="off" class="form-control text-box single-line valid" />
+                <div id="header_name_edit">
+                    <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
                 </div>
-                <button type="button" class="btn btn-github" id="update_header">
-                    <i class="fa fa-save fa-2x" aria-hidden="true"></i>
-                </button>
             </div>
-            <ul id="myTags">
-            </ul>
-            <textarea id="header_text" class="header_text"></textarea>
-        }
+            <button type="button" class="btn btn-github hint--bottom"
+                        id="update_header" aria-label="@Resources.Resource.SaveHeaderContent">
+                <i class="fa fa-save fa-2x" aria-hidden="true"></i>
+            </button>
+        </div>
+        <ul id="myTags">
+            @foreach (var tag in header.Tags)
+            {
+                <li>@tag.Name</li>
+            }
+        </ul>
+        <textarea id="header_text" class="header_text">@header.Text</textarea>
+         
     </div>
 </div>
-
-
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -199,14 +186,6 @@
                 element: document.getElementById("header_text"),
                 spellChecker: false,
             });
-            simplemde.codemirror.on("change", function () {
-                //console.log(simplemde.value());
-            });
-
-            simplemde.codemirror.on("dragstart", function (editor, e) { console.log('dragstart') });
-            simplemde.codemirror.on("dragenter", function (editor, e) { console.log('dragenter') });
-            simplemde.codemirror.on("dragover", function (editor, e) { console.log('dragover') });
-            simplemde.codemirror.on("drop", function (editor, e) { console.log('drop') });
 
             var myArray = [];
 
@@ -233,13 +212,6 @@
                         url: '/User/UpdateHeaderOrders'
                     }).success(function () {});
                 }
-                /*change: function (event, ui) { }, //save the sort
-                start: function (event, ui) {
-                    $(ui.item).css("opacity", "1.0");
-                },
-                stop: function (event, ui) {
-                    $(ui.item).css("opacity", "0.8");
-                }*/
             });
 
             $("#headers").delegate('.header', 'click', function (e) {
@@ -311,7 +283,7 @@
             });
             $("#update_header").on('click', function () {
                 var Id = $('#header_id').val();
-                if (!Id)
+                if (Id < 0)
                 {
                     return;
                 }

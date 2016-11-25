@@ -5,6 +5,7 @@
 
 @{
     ViewBag.Title = "ViewCreative";
+    
     <link rel="stylesheet" type="text/css" href="~/Content/view.css" />
 }
 
@@ -48,24 +49,34 @@
 </div>
 
 <div id="view_settings">
-    <a href="#" onclick="return false;" class="increaseFont"><i class="fa fa-2x fa-search-plus" aria-hidden="true"></i></a>
-    <a href="#" onclick="return false;" class="decreaseFont"><i class="fa fa-2x fa-search-minus" aria-hidden="true"></i></a>
-    <a href="#" onclick="return false;" class="resetFont"><i class="fa fa-2x fa-refresh" aria-hidden="true"></i></a>
-                
-    <a href="#" onclick="return false;" class="increasePanelWidth">
-        <i class="fa fa-2x fa-arrow-left" aria-hidden="true"></i>
-        <i class="fa fa-2x fa-arrow-right" aria-hidden="true"></i>
-    </a>
-    <a href="#" onclick="return false;" class="decreasePanelWidth">
-        <i class="fa fa-2x fa-arrow-right" aria-hidden="true"></i>
-        <i class="fa fa-2x fa-arrow-left" aria-hidden="true"></i>
-    </a>
+    <div><a href="#" onclick="return false;" class="increaseFont"><i class="fa fa-2x fa-search-plus" aria-hidden="true"></i></a></div>
+    <div><a href="#" onclick="return false;" class="decreaseFont"><i class="fa fa-2x fa-search-minus" aria-hidden="true"></i></a></div>
+    @*
+    <div><a href="#" onclick="return false;" class="resetFont"><i class="fa fa-2x fa-refresh" aria-hidden="true"></i></a></div>
+    *@
+    <div class="arrows">
+        <a href="#" onclick="return false;" class="increasePanelWidth">
+            <i class="fa fa-2x fa-arrow-left" aria-hidden="true"></i>
+            <i class="fa fa-2x fa-arrow-right" aria-hidden="true"></i>
+        </a>
+    </div>
+    <div class="arrows">
+        <a href="#" onclick="return false;" class="decreasePanelWidth">
+            <i class="fa fa-2x fa-arrow-right" aria-hidden="true"></i>
+            <i class="fa fa-2x fa-arrow-left" aria-hidden="true"></i>
+        </a>
+    </div>
 </div>
 
 <div id="headers">
     @foreach (var header in Model.Headers)
     {
-        <div class="panel panel-primary">
+        string panelClass = "panel-primary";
+        if(header.Id == ViewBag.SelectedHeaderId)
+        {
+            panelClass = "panel-warning";
+        }
+        <div id="h@(header.Id)" class="panel @panelClass">
             <div class="panel-heading">
                 <h3 class="panel-title">@header.Name @header.Id</h3>
             </div>
@@ -111,13 +122,13 @@
         };*/
 
         $(document).ready(function () {
+
             // Reset Font Size
             var originalFontSize = $('.panel-body *').css('font-size');
 
             $(".resetFont").click(function () {
                 //$('.panel-body *').css('font-size', originalFontSize);
                 $('.panel').animate({ marginLeft: '0%', marginRight: '0%' }, 1000);
-                $('#view_settings').animate({ marginLeft: '0%', marginRight: '0%' }, 1000);
             });
             // Increase Font Size
             $(".increaseFont").on('click', function () {
@@ -130,11 +141,9 @@
 
             $(".increasePanelWidth").on('click', function () {
                 $('.panel').animate({ marginLeft: '0%', marginRight: '0%' }, 1000);
-                $('#view_settings').animate({ marginLeft: '0%', marginRight: '0%' }, 1000);
             });
             $(".decreasePanelWidth").on('click', function () {
                 $('.panel').animate({ marginLeft: '20%', marginRight: '20%' }, 1000);
-                $('#view_settings').animate({ marginLeft: '20%', marginRight: '20%' }, 1000);
             });
 
             var rate = @Model.Rating.ToString().Replace(',', '.');
@@ -166,7 +175,9 @@
                       $('#rateText span').html(newRating + " @Resources.Resource.Of 5");
                   });
               });
-           
+            $('html, body').animate({
+                scrollTop:$('#h@(ViewBag.SelectedHeaderId)').position().top - 100
+            }, 'slow');
         });
 
     </script>

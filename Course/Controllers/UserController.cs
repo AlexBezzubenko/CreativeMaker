@@ -74,6 +74,10 @@ namespace Course.Controllers
             {
                 return HttpNotFound();
             }
+            foreach(var h in creative.Headers)
+            {
+                Lucene.LuceneSearch.DeleteDocument(h);
+            }
             db.Creatives.Remove(creative);
             try
             {
@@ -124,6 +128,11 @@ namespace Course.Controllers
             Creative creative = db.Creatives.Find(Id);
             creative.Name = Name;
 
+            foreach(var h in creative.Headers)
+            {
+                Lucene.LuceneSearch.UpdateDocument(h);
+            }
+
             db.Entry(creative).State = EntityState.Modified;
             db.SaveChanges();
             return;
@@ -162,6 +171,8 @@ namespace Course.Controllers
 
                 db.SaveChanges();
 
+                Lucene.LuceneSearch.AddToIndex(header);
+
                 return PartialView("~/Views/User/Header.cshtml", header);
             }
             catch (DbEntityValidationException e)
@@ -177,6 +188,7 @@ namespace Course.Controllers
             
             try
             {
+                Lucene.LuceneSearch.DeleteDocument(header);
                 db.Headers.Remove(header);
                 db.SaveChanges();
             }
@@ -212,6 +224,8 @@ namespace Course.Controllers
 
             db.Entry(header).State = EntityState.Modified;
             db.SaveChanges();
+
+            Lucene.LuceneSearch.UpdateDocument(header);
             return;
         }
 
@@ -227,8 +241,10 @@ namespace Course.Controllers
             return;
         }
 
-        public ActionResult View(int id)
+        public ActionResult View(long id, long selectedHeaderId = -1)
         {
+            ViewBag.SelectedHeaderId = selectedHeaderId;
+
             Creative creative = db.Creatives.Find(id);
             if (creative == null)
             {

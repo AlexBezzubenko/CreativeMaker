@@ -18,6 +18,14 @@ namespace Course.Lucene
 {
     public class LuceneSearch
     {
+        const string HeaderId = "HeaderId";
+        const string HeaderName = "HeaderName";
+        const string Text = "Text";
+        const string Tags = "Tags";
+        const string UserName = "UserName";
+        const string CreativeId = "CreativeId";
+        const string CreativeName = "CreativeName";
+
         public static void BuildIndex(IEnumerable<Header> headers)
         {
             using (var directory = GetDirectory())
@@ -30,6 +38,7 @@ namespace Course.Lucene
                     var document = MapHeader(h);
                     writer.AddDocument(document);
                 }
+                writer.Optimize();
             }
         }
 
@@ -37,17 +46,45 @@ namespace Course.Lucene
         {
             var document = new Document();
 
-            document.Add(new NumericField("HeaderId", Field.Store.YES, false).SetLongValue(header.Id));
-            document.Add(new Field("HeaderName", header.Name, Field.Store.YES, Field.Index.ANALYZED));
-            document.Add(new Field("Text", MarkdownToPlainText(header.Text), Field.Store.NO, Field.Index.ANALYZED));
-            document.Add(new Field("Tags", String.Join(" ",header.Tags), Field.Store.NO, Field.Index.ANALYZED));
-            document.Add(new Field("UserName", header.Creative.ApplicationUser.UserName, 
+            document.Add(new Field(HeaderId, header.Id.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+            document.Add(new Field(HeaderName, header.Name, Field.Store.YES, Field.Index.ANALYZED));
+            document.Add(new Field(Text, MarkdownToPlainText(header.Text), 
+                                    Field.Store.NO, Field.Index.ANALYZED));
+            String tags = "";
+            foreach (var t in header.Tags)
+            {
+                tags += t.Name + " ";
+            }
+            //String tags = String.Join(" ", header.Tags);
+            document.Add(new Field(Tags, tags, Field.Store.NO, Field.Index.ANALYZED));
+            document.Add(new Field(UserName, header.Creative.ApplicationUser.UserName, 
                                     Field.Store.YES, Field.Index.NOT_ANALYZED));
-            document.Add(new NumericField("CreativeId", Field.Store.YES, false).SetLongValue(header.Creative.Id));
-            document.Add(new Field("CreativeName", header.Creative.Name, Field.Store.YES, Field.Index.ANALYZED));
-            document.Add(new NumericField("Rating", Field.Store.YES, false).SetDoubleValue(header.Creative.Rating));
+            document.Add(new NumericField(CreativeId, Field.Store.YES, false).SetLongValue(header.Creative.Id));
+            document.Add(new Field(CreativeName, header.Creative.Name, Field.Store.YES, Field.Index.ANALYZED));
 
             return document;
+        }
+
+        public static void AddToIndex(Header h)
+        {
+            using (var directory = GetDirectory())
+            using (var analyzer = GetAnalyzer())
+            using (var writer = new IndexWriter(directory, analyzer, IndexWriter.MaxFieldLength.UNLIMITED))
+            {
+                var document = MapHeader(h);
+                writer.AddDocument(document);
+            }
+        }
+
+        public static void UpdateDocument(Header h)
+        {
+            using (var directory = GetDirectory())
+            using (var analyzer = GetAnalyzer())
+            using (var writer = new IndexWriter(directory, analyzer, IndexWriter.MaxFieldLength.UNLIMITED))
+            {
+                var document = MapHeader(h);
+                writer.UpdateDocument(new Term(HeaderId, h.Id.ToString()), document);
+            }
         }
 
         private static string MarkdownToPlainText(string markdown)
@@ -69,18 +106,25 @@ namespace Course.Lucene
             return new StandardAnalyzer(Version.LUCENE_30);
         }
 
+        public static void DeleteDocument(Header header) 
+        {
+            using (var directory = GetDirectory())
+            using (var analyzer = GetAnalyzer())
+            using (var writer = new IndexWriter(directory, analyzer, IndexWriter.MaxFieldLength.UNLIMITED))
+            {
+                var searchQuery = new TermQuery(new Term(HeaderId, header.Id.ToString()));
+                writer.DeleteDocuments(searchQuery);
+            }
+             
+        }
+
         public static Query GetQuery(string keywords)
         {
             using (var analyzer = GetAnalyzer())
             {
-                /*var parser = new QueryParser(Version.LUCENE_30, "HeaderName", analyzer);
-                var query = new BooleanQuery();
-                var keywordsQuery = parser.Parse(keywords);
-                query.Add(keywordsQuery, Occur.MUST);*/
-
                 var parser = new MultiFieldQueryParser
-                    (Version.LUCENE_30, new[] { "HeaderName", "Text", "Tags",
-                        "UserName", "CreativeName", }, analyzer);
+                    (Version.LUCENE_30, new[] { HeaderName, Text, Tags,
+                        UserName, CreativeName, }, analyzer);
                 var query = parser.Parse(keywords);
 
                 return query;  
@@ -89,6 +133,11 @@ namespace Course.Lucene
 
         public static List<CreativeResult> Search(string keywords, int limit)
         {
+            var creatives = new List<CreativeResult>();
+            if (String.IsNullOrEmpty(keywords))
+            {
+                return creatives;
+            }
             using (var directory = GetDirectory())
             using (var searcher = new IndexSearcher(directory))
             {
@@ -96,19 +145,17 @@ namespace Course.Lucene
 
                 var docs = searcher.Search(query, limit);
                 var count = docs.TotalHits;
-
-                var creatives = new List<CreativeResult>();
+                
                 foreach (var scoreDoc in docs.ScoreDocs)
                 {
                     var doc = searcher.Doc(scoreDoc.Doc);
                     var creative = new CreativeResult
                     {
-                        HeaderId = long.Parse(doc.Get("HeaderId")),
-                        HeaderName = doc.Get("HeaderName"),
-                        UserName = doc.Get("UserName"),
-                        CreativeId = long.Parse(doc.Get("CreativeId")),
-                        CreativeName = doc.Get("CreativeName"),
-                        Rating = double.Parse(doc.Get("Rating"))
+                        HeaderId = long.Parse(doc.Get(HeaderId)),
+                        HeaderName = doc.Get(HeaderName),
+                        UserName = doc.Get(UserName),
+                        CreativeId = long.Parse(doc.Get(CreativeId)),
+                        CreativeName = doc.Get(CreativeName),
                     };
                     creatives.Add(creative);
                 }

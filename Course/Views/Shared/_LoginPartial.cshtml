@@ -44,7 +44,8 @@
             @Html.ActionLink(@currentLanguage, "ChangeCulture", "Home", new { lang = @otherLanguage }, null)
         </li>
         <li>
-            @Html.ActionLink(Resources.Resource.Hello + ", " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @Html.ActionLink(Resources.Resource.Hello + ", " + User.Identity.GetUserName() + "!", 
+                            "Index", "Manage", routeValues: null, htmlAttributes: null)
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">@Resources.Resource.LogOff</a></li>
     </ul>

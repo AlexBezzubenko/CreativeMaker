@@ -5,7 +5,6 @@
     ViewBag.Title = "Search";
 }
 
-<h2>Search</h2>
 <div id="searchResult" class="col-md-12">
     <h2>Results:</h2>
     <table class="table table-striped table-hover">
@@ -16,7 +15,15 @@
                     @Html.DisplayFor(i => result.CreativeId)
                 </td>
                 <td>
-                    @Html.ActionLink(result.CreativeName, "View", "User", new { id = result.CreativeId }, null)
+                    @Html.ActionLink(result.CreativeName, "View", "User", 
+                                     new { id = result.CreativeId }, null)
+                </td>
+                <td>
+                    @Html.DisplayFor(i => result.HeaderId)
+                </td>
+                <td>
+                    @Html.ActionLink(result.HeaderName, "View", "User",
+                                     new { id = result.CreativeId, selectedHeaderId = result.HeaderId }, null)
                 </td>
                 <td>
                     @Html.DisplayFor(i => result.UserName)
