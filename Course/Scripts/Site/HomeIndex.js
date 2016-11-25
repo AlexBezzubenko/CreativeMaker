@@ -10,15 +10,4 @@ $(document).ready(function () {
         // TagCanvas failed to load
         $('#myCanvasContainer').hide();
     }
-    $(".rateYo").rateYo({
-        starWidth: "30px",
-        halfStar: true,
-        onInit: function (rating, rateYoInstance) {
-            var rate = $(this).parent().parent()
-                .find('.itemRate').val().replace(',', '.');
-            console.log("" + rate);
-            $(this).rateYo("option", "rating", rate);
-            $(this).rateYo("option", "readOnly", true);
-        }
-    });
 });

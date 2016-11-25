@@ -2,64 +2,47 @@
 @model IEnumerable<CreativeResult>
 
 @{
-    ViewBag.Title = "Search";
+    ViewBag.Title = Resources.Resource.SearchResults;
 }
 
 <div id="searchResult" class="col-md-12">
-    <h2>Results:</h2>
+    <h2>@(Resources.Resource.SearchResults):</h2>
     <table class="table table-striped table-hover">
-        @foreach (var result in Model)
-            {
-            <tr class="success">
-                <td>
-                    @Html.DisplayFor(i => result.CreativeId)
-                </td>
-                <td>
-                    @Html.ActionLink(result.CreativeName, "View", "User", 
-                                     new { id = result.CreativeId }, null)
-                </td>
-                <td>
-                    @Html.DisplayFor(i => result.HeaderId)
-                </td>
-                <td>
-                    @Html.ActionLink(result.HeaderName, "View", "User",
-                                     new { id = result.CreativeId, selectedHeaderId = result.HeaderId }, null)
-                </td>
-                <td>
-                    @Html.DisplayFor(i => result.UserName)
-                </td>
-
-                <td>
-                    <input class="itemRate" type="hidden" value="@result.Rating" />
-                </td>
-
-                <td>
-                    <div class="rateYo"></div>
-                </td>
-
+        <thead>
+            <tr>
+                <th>@Resources.Resource.CreativeName</th>
+                <th>@Resources.Resource.HeaderName</th>
+                <th>@Resources.Resource.Author</th>
+                <th>@Resources.Resource.Rating</th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var result in Model)
+            {
+                <tr class="success">
+                    <td>
+                        @Html.ActionLink(result.CreativeName, "View", "User",
+                                     new { id = result.CreativeId }, null)
+                    </td>
+                    <td>
+                        @Html.ActionLink(result.HeaderName, "View", "User",
+                                     new { id = result.CreativeId, selectedHeaderId = result.HeaderId }, null)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => result.UserName)
+                    </td>
+                    <input class="itemRate" type="hidden" value="@result.Rating" />
+                    <td>
+                        <div class="rateYo"></div>
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 </div>
 
 @section Scripts {
-    <script>
-        $(document).ready(function () {
-            
-            $(".rateYo").rateYo({
-                starWidth: "30px",
-                halfStar: true,
-                onInit: function (rating, rateYoInstance) {
-                    var rate = $(this).parent().parent()
-                        .find('.itemRate').val().replace(',', '.');
-                    console.log("" + rate);
-                    $(this).rateYo("option", "rating", rate);
-                    $(this).rateYo("option", "readOnly", true);
-                }
-            });
-        });
-
-    </script>
+    <script src="~/Scripts/Site/RateYoInTable.js" type="text/javascript"></script>
 }
 
 

@@ -18,6 +18,7 @@ namespace Course.Controllers
     public class HomeController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
+
         public ActionResult Index()
         {
             var lastCreatives = db.Creatives.Include(x => x.ApplicationUser)
@@ -30,9 +31,6 @@ namespace Course.Controllers
 
         public ActionResult HeadersByTag(int id)
         {
-            //var tag = db.Tags.Find(id);
-            //var headers = db.Headers.Where(x => x.Tags.Where(y => y.Name == tag.Name).Any()).Include(x => x.Tags).Include(x=>x.Creative);
-            //ViewBag.Headers = tag.Headers;
             var creativeResults = new List<CreativeResult>();
 
             foreach (var h in db.Tags.Find(id).Headers) {
@@ -59,18 +57,24 @@ namespace Course.Controllers
         public ActionResult ChangeCulture(String lang)
         {
             HttpCookie cookie = Request.Cookies["lang"];
+
             if (cookie != null)
                 cookie.Value = lang;    
             else
             {
-
-                cookie = new HttpCookie("lang");
-                cookie.HttpOnly = false;
-                cookie.Value = lang;
-                cookie.Expires = DateTime.Now.AddYears(1);
+                cookie = SetCookieLanguage(lang);
             }
             Response.Cookies.Add(cookie);
             return Redirect(Request.UrlReferrer.AbsolutePath);
+        }
+
+        private HttpCookie SetCookieLanguage(String lang)
+        {
+            var cookie = new HttpCookie("lang");
+            cookie.HttpOnly = false;
+            cookie.Value = lang;
+            cookie.Expires = DateTime.Now.AddYears(1);
+            return cookie;
         }
 
         public ActionResult ChangeTheme(string themename)
@@ -86,17 +90,14 @@ namespace Course.Controllers
 
         public ActionResult Search(string query)
         {
-            var result = LuceneSearch.Search(query, 50);
+            var result = LuceneSearch.Search(query, 100);
 
             foreach(var creativeResult in result)
             {
                 creativeResult.Rating = db.Creatives.Find(creativeResult.CreativeId).Rating;
             }
 
-            var creatives = db.Creatives.Where(x=>x.Name.Contains(query)).Include(x => x.ApplicationUser)
-                                .Include(x => x.Headers);
             return View(result);
-            //return RedirectToAction("Index");
         }
     }
 }

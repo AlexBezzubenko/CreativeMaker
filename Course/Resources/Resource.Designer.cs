@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Автор.
+        /// </summary>
+        public static string Author {
+            get {
+                return ResourceManager.GetString("Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Отмена.
         /// </summary>
         public static string Cancel {
@@ -133,6 +142,51 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Креатив.
+        /// </summary>
+        public static string CreativeName {
+            get {
+                return ResourceManager.GetString("CreativeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Удалить.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Редактировать.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Отредактировано.
+        /// </summary>
+        public static string Edited {
+            get {
+                return ResourceManager.GetString("Edited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Глава.
+        /// </summary>
+        public static string HeaderName {
+            get {
+                return ResourceManager.GetString("HeaderName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Привет.
         /// </summary>
         public static string Hello {
@@ -151,11 +205,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Последние отредактированные.
+        ///   Looks up a localized string similar to Отредактированные.
         /// </summary>
         public static string LastEdited {
             get {
                 return ResourceManager.GetString("LastEdited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Забанить.
+        /// </summary>
+        public static string Lock {
+            get {
+                return ResourceManager.GetString("Lock", resourceCulture);
             }
         }
         
@@ -214,11 +277,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Оценка.
+        /// </summary>
+        public static string Rating {
+            get {
+                return ResourceManager.GetString("Rating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Зарегистрироваться.
         /// </summary>
         public static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Время регистрации.
+        /// </summary>
+        public static string RegistrationTime {
+            get {
+                return ResourceManager.GetString("RegistrationTime", resourceCulture);
             }
         }
         
@@ -250,11 +331,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to строка1.
+        ///   Looks up a localized string similar to Результаты.
         /// </summary>
-        public static string String1 {
+        public static string SearchResults {
             get {
-                return ResourceManager.GetString("String1", resourceCulture);
+                return ResourceManager.GetString("SearchResults", resourceCulture);
             }
         }
         
@@ -264,6 +345,15 @@ namespace Resources {
         public static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Разбанить.
+        /// </summary>
+        public static string Unlock {
+            get {
+                return ResourceManager.GetString("Unlock", resourceCulture);
             }
         }
         

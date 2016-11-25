@@ -1,62 +1,63 @@
-﻿@model IEnumerable<Course.Models.ApplicationUser>
-@using Course.Models;
+﻿@using Course.Models;
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin;
+
+@model IEnumerable<ApplicationUser>
 
 @{
-    ViewBag.Title = "Admin";
+    ViewBag.Title = Resources.Resource.Admin;
 }
 
 <div id="userList" style="margin-top:20px">
     <table class="userListTable">
-        <tr>
-            <th>
-                @Html.Label(nameof(ApplicationUser.Email))
-            </th>
-            <th>
-                Registration time
-            </th>
-        </tr>
-
-        @using Microsoft.AspNet.Identity
-        @using Microsoft.AspNet.Identity.Owin;
-
-        @foreach (var item in Model)
-        {
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                @{
-                    var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                    var manager = HttpContext.Current.GetOwinContext().GetUserManager<UserManager<ApplicationUser>>();
-                    //MembershipUser usr = Membership.GetUser(item.Id);
-                    //bool isApproved = usr.IsApproved;
-                    // Check for lockout;
-                    bool isApproved = userManager.IsLockedOut(item.Id);
-                }
-                <td>
-                    @item.RegistrationDate.ToString()
-                </td>
-                <td>
-                    @{
-                        if (isApproved)
-                        {
-
-                            @Html.ActionLink("unlock", "Unlock", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary", style = "width:100px;" })
-                        }
-                        else
-                        {
-                            @Html.ActionLink("lock", "Lock", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary", style = "width:100px;" })
-                        }
-                    }
-                </td>
-                <td>
-                    @{
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-danger", style = "width:100px;" })
-                    }
-                </td>
-
+                <th>
+                    @Resources.Resource.Author
+                </th>
+                <th>
+                    @Resources.Resource.RegistrationTime
+                </th>
+                <th></th>
+                <th></th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    @{
+                        var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                        var manager = HttpContext.Current.GetOwinContext().GetUserManager<UserManager<ApplicationUser>>();
+                        bool isApproved = userManager.IsLockedOut(item.Id);
+                    }
+                    <td>
+                        @item.RegistrationDate.ToString()
+                    </td>
+                    <td>
+                        @{
+                            if (isApproved)
+                            {
+
+                                @Html.ActionLink(Resources.Resource.Unlock, "Unlock", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary", style = "width:100px;" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink(Resources.Resource.Lock, "Lock", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary", style = "width:100px;" })
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{
+                            @Html.ActionLink(Resources.Resource.Delete, "Delete", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-danger", style = "width:100px;" })
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 </div>
 

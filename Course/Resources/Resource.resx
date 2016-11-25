@@ -123,6 +123,9 @@
   <data name="ApplicationName" xml:space="preserve">
     <value>CreativeMaker</value>
   </data>
+  <data name="Author" xml:space="preserve">
+    <value>Автор</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Отмена</value>
   </data>
@@ -141,6 +144,21 @@
   <data name="CreateNewHeader" xml:space="preserve">
     <value>Создать новую главу</value>
   </data>
+  <data name="CreativeName" xml:space="preserve">
+    <value>Креатив</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Редактировать</value>
+  </data>
+  <data name="Edited" xml:space="preserve">
+    <value>Отредактировано</value>
+  </data>
+  <data name="HeaderName" xml:space="preserve">
+    <value>Глава</value>
+  </data>
   <data name="Hello" xml:space="preserve">
     <value>Привет</value>
   </data>
@@ -148,7 +166,10 @@
     <value>Главная</value>
   </data>
   <data name="LastEdited" xml:space="preserve">
-    <value>Последние отредактированные</value>
+    <value>Отредактированные</value>
+  </data>
+  <data name="Lock" xml:space="preserve">
+    <value>Забанить</value>
   </data>
   <data name="LogIn" xml:space="preserve">
     <value>Войти</value>
@@ -168,8 +189,14 @@
   <data name="Popular" xml:space="preserve">
     <value>Популярные</value>
   </data>
+  <data name="Rating" xml:space="preserve">
+    <value>Оценка</value>
+  </data>
   <data name="Register" xml:space="preserve">
     <value>Зарегистрироваться</value>
+  </data>
+  <data name="RegistrationTime" xml:space="preserve">
+    <value>Время регистрации</value>
   </data>
   <data name="SaveHeaderContent" xml:space="preserve">
     <value>Сохранить содержимое главы</value>
@@ -180,11 +207,14 @@
   <data name="SearchButton" xml:space="preserve">
     <value>Мне повезет!</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value>строка1</value>
+  <data name="SearchResults" xml:space="preserve">
+    <value>Результаты</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Тема</value>
+  </data>
+  <data name="Unlock" xml:space="preserve">
+    <value>Разбанить</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>Моя страница</value>

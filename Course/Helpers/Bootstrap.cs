@@ -16,10 +16,10 @@ namespace Course.Helpers
         }
 
         public static HashSet<string> Themes = new HashSet<string>
-    {
-        Theme.Default,
-        Theme.Readable
-    };
+        {
+            Theme.Default,
+            Theme.Readable
+        };
 
         public static string Bundle(string themename)
         {

@@ -12,7 +12,7 @@ namespace Course.Filters
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
             string cultureName = null;
-            // Получаем куки из контекста, которые могут содержать установленную культуру
+            // Get cookie from context
             HttpCookie cultureCookie = filterContext.HttpContext.Request.Cookies["lang"];
             if (cultureCookie != null)
                 cultureName = cultureCookie.Value;
@@ -25,7 +25,6 @@ namespace Course.Filters
 
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            //не реализован
         }
     }
 }

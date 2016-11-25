@@ -133,35 +133,46 @@ namespace Course.Lucene
 
         public static List<CreativeResult> Search(string keywords, int limit)
         {
-            var creatives = new List<CreativeResult>();
             if (String.IsNullOrEmpty(keywords))
             {
-                return creatives;
+                return new List<CreativeResult>();
             }
             using (var directory = GetDirectory())
             using (var searcher = new IndexSearcher(directory))
             {
                 var query = GetQuery(keywords);
-
                 var docs = searcher.Search(query, limit);
                 var count = docs.TotalHits;
-                
-                foreach (var scoreDoc in docs.ScoreDocs)
-                {
-                    var doc = searcher.Doc(scoreDoc.Doc);
-                    var creative = new CreativeResult
-                    {
-                        HeaderId = long.Parse(doc.Get(HeaderId)),
-                        HeaderName = doc.Get(HeaderName),
-                        UserName = doc.Get(UserName),
-                        CreativeId = long.Parse(doc.Get(CreativeId)),
-                        CreativeName = doc.Get(CreativeName),
-                    };
-                    creatives.Add(creative);
-                }
+                var creatives = GetResultsFromDocs(docs, searcher);
 
                 return creatives;
             }
         }
+
+        private static List<CreativeResult> GetResultsFromDocs(TopDocs docs, IndexSearcher searcher)
+        {
+            var creativeResults = new List<CreativeResult>();
+            foreach (var scoreDoc in docs.ScoreDocs)
+            {
+                var doc = searcher.Doc(scoreDoc.Doc);
+                var cr = GetCreativeResultFromDoc(doc);
+                creativeResults.Add(cr);
+            }
+            return creativeResults;
+        }
+
+        private static CreativeResult GetCreativeResultFromDoc(Document doc)
+        {
+            var cr = new CreativeResult
+            {
+                HeaderId = long.Parse(doc.Get(HeaderId)),
+                HeaderName = doc.Get(HeaderName),
+                UserName = doc.Get(UserName),
+                CreativeId = long.Parse(doc.Get(CreativeId)),
+                CreativeName = doc.Get(CreativeName),
+            };
+            return cr;
+        }
+
     }
 }
