@@ -26,6 +26,7 @@ namespace Course.Controllers
 
             return RedirectToAction("Index");
         }
+
         public async Task<ActionResult> Unlock(string id)
         {
             var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();

@@ -1,23 +1,24 @@
 ﻿@using Course.Models
 @using Microsoft.AspNet.Identity;
-@model Creative
+@model UserViewModels
 
 @{
-    ApplicationUser User = ViewBag.User;
-    ViewBag.Title = "Index";
-    <link rel="stylesheet" type="text/css" href="~/Content/user.css" />
+    ViewBag.Title = Resources.Resource.User;
+    <link rel="stylesheet" type="text/css" href="~/Content/Site/UserIndex.css" />
 }
-<br />
+<br/>
+
+<input id="user_id" type="hidden" value="@Model.User.Id"/>
 
 <div id="medals">
-    @foreach(var badge in User.Badges.OrderBy(x => x.Order))
+    @foreach(var badge in Model.User.Badges.OrderBy(x => x.Order))
     { 
         <img class="medal_image" aria-label="@badge.Name" src="@Url.Content(@badge.ImageUrl)" />
     }
     
 </div>
 
-<button type="button" class="btn btn-github hint--bottom hint--error" 
+<button type="button" class="btn btn-github hint--bottom hint--success" 
         aria-label="@Resources.Resource.CreateNewCreative" data-toggle="modal" data-target="#createModal">
     <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
 </button>
@@ -46,62 +47,32 @@
                 </button>
             </div>
         </div>
-
     </div>
 </div>
-
- 
 
 <div>
     <table id="creativeTable" class="table table-striped table-hover tablesorter">
         <thead>
             <tr>
-                <th>
-                    @Html.Label(nameof(Creative.Id))
-                </th>
-                <th>
-                    @Html.Label(nameof(Creative.Name))
-                </th>
-                <th>
-                    @Html.Label(nameof(Creative.ApplicationUser))
-                </th>
-                <th>
-                    @Html.Label(nameof(Creative.CreationTime))
-                </th>
-                <th>
-                    @Html.Label(nameof(Creative.LastEditTime))
-                </th>
-                <th>
-                    @Html.Label(nameof(Creative.Views))
-                </th>
-                <th>
-                    @Html.Label(nameof(Creative.Rating))
-                </th>
-                <th>
-                    @Html.Label(nameof(Creative.RatingsAmount))
-                </th>
-                <th>
-                    <label>Stars</label>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
+                <th>@Resources.Resource.CreativeName</th>
+                <th>@Resources.Resource.Author</th>
+                <th>@Resources.Resource.Created</th>
+                <th>@Resources.Resource.Edited</th>
+                <th style="text-align: center;"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></th>
+                <th>@Resources.Resource.Rating</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-
-            @foreach (Creative item in ViewBag.Creatives)
+            @foreach (Creative item in Model.Creatives)
             {
                 <tr class="success">
                     <td>
-                        @Html.DisplayFor(i => item.Id)
+                        @Html.ActionLink(item.Name, "View", "Home", new { id = item.Id }, null)
                     </td>
                     <td>
-                        @Html.ActionLink(item.Name, "View", "User", new { id = item.Id }, null)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(i => item.ApplicationUser.Email)
+                        @Html.DisplayFor(i => item.ApplicationUser.UserName)
                     </td>
                     <td>
                         @Html.DisplayFor(i => item.CreationTime)
@@ -109,26 +80,22 @@
                     <td>
                         @Html.DisplayFor(i => item.LastEditTime)
                     </td>
-                    <td>
+                    <td align="center">
                         @Html.DisplayFor(i => item.Views)
                     </td>
-                    <td>
-                        <input class="itemRate" type="hidden" value="@item.Rating" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(i => item.RatingsAmount)
-                    </td>
+                    <input class="itemRate" type="hidden" value="@item.Rating" />
                     <td>
                         <div class="rateYo"></div>
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-success" })
+                        @Html.ActionLink(Resources.Resource.Edit, "Edit",
+                                         new { id = item.Id }, new { @class = "btn btn-success" })
                     </td>
                     <td>
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink(Resources.Resource.Delete, "Delete", 
+                                         new { id = item.Id }, new { @class = "btn btn-danger" })
                     </td>
                 </tr>
-
             }
         </tbody>
 </table>
@@ -137,38 +104,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript" src="~/Scripts/jquery.tablesorter.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#creativeTable").tablesorter();
-            $(".rateYo").rateYo({
-                starWidth: "40px",
-                halfStar: true,
-                onInit: function (rating, rateYoInstance) {
-                    var rate = $(this).parent().parent().find('.itemRate').val().replace(',', '.');
-                    ///console.log("" + rate);
-                    $(this).rateYo("option", "rating", rate);
-                    $(this).rateYo("option", "readOnly", true);
-                }
-            });
-
-            $('#create_button').on("click", function () {
-                var creative_name = $('#creative-name').val();
-                var data = { name: creative_name };
-
-                $.ajax({
-                    type: 'POST',
-                    async: false,
-                    data: data,
-                    url: '/User/CreateCreative'
-                }).success(function (id) {
-                    //window.location.reload(true);
-                    window.location.href = "/User/Edit/" + id;
-                });
-                //console.log("--text--" + name);
-            });
-        });
-
-    </script>
+    <script type="text/javascript" src="~/Scripts/Site/UserIndex.js"></script>
 }
 
 

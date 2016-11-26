@@ -10,7 +10,7 @@ using System.Data.Entity.Validation;
 using System.Data.Entity.Infrastructure;
 
 using System.Data.Entity;
-using System.Net;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Course.Filters;
 using System.Web.Script.Serialization;
@@ -19,36 +19,30 @@ namespace Course.Controllers
 {
   
     [Culture]
+    [Authorize]
     public class UserController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
 
-        [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(String id)
         {
-            var currentUserId = User.Identity.GetUserId();
-
-            ViewBag.User = db.Users.Find(currentUserId);
-
-            ViewBag.Creatives = db.Creatives.Where(x => x.ApplicationUser.Id == currentUserId)
+            var currentUserId = id ?? User.Identity.GetUserId();
+            var user = db.Users.Find(currentUserId);
+            var creatives = db.Creatives.Where(x => x.ApplicationUser.Id == currentUserId)
                                 .Include(x => x.ApplicationUser).Include(x => x.Headers);
-            ViewBag.User = db.Users.Find(currentUserId);
-            return View();
+            return View(new UserViewModels(creatives, user));
         }
 
-        [Authorize]
-        [HttpGet]
-        public ActionResult Add() => View();
-
-        [Authorize]
         [HttpPost]
-        public long CreateCreative(string name)
+        public long CreateCreative(string name, string userId)
         {
-            var currentUser = db.Users.Find(User.Identity.GetUserId());
-
-            Creative creative = new Creative();
-            creative.Name = name;
-            creative.ApplicationUser = currentUser;
+            var currentUserId = userId ?? User.Identity.GetUserId();
+            var currentUser = db.Users.Find(currentUserId);
+            var creative = new Creative()
+            {
+                Name = name,
+                ApplicationUser = currentUser
+            };
             db.Creatives.Add(creative);
 
             Award(currentUser);
@@ -57,7 +51,7 @@ namespace Course.Controllers
             return creative.Id;
         }
 
-        public void Award(ApplicationUser user) {
+        private void Award(ApplicationUser user) {
             var badge = db.Badges.FirstOrDefault(x => x.Amount == user.Creatives.Count); 
             if (badge != null && !user.Badges.Contains(badge))
             {
@@ -65,7 +59,6 @@ namespace Course.Controllers
             }           
         }
 
-        [Authorize]
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -74,24 +67,25 @@ namespace Course.Controllers
             {
                 return HttpNotFound();
             }
-            foreach(var h in creative.Headers)
+
+            DeleteCreativeDocuments(creative);
+
+            var userId = creative.ApplicationUser.Id; 
+            db.Creatives.Remove(creative);
+            
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "User", new { id = userId });
+        }
+
+        private void DeleteCreativeDocuments(Creative c)
+        {
+            foreach (var h in c.Headers)
             {
                 Lucene.LuceneSearch.DeleteDocument(h);
             }
-            db.Creatives.Remove(creative);
-            try
-            {
-                db.SaveChanges();
-            }
-            catch(Exception e)
-            {
-
-            }
-            return RedirectToAction("Index");
         }
 
-
-        [Authorize]
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -107,7 +101,6 @@ namespace Course.Controllers
             return View(creative);
         }
 
-        [Authorize]
         [HttpPost]
         public ActionResult Edit(Creative creative)
         {
@@ -122,7 +115,6 @@ namespace Course.Controllers
         }
 
 
-        [Authorize]
         public void ChangeCreativeName(long Id, string Name)
         {
             Creative creative = db.Creatives.Find(Id);
@@ -153,7 +145,6 @@ namespace Course.Controllers
             return serializer.Serialize(simpleHeader);
         }
 
-        [Authorize]
         public ActionResult AddHeader(long id)
         {
             Creative creative = db.Creatives.Find(id);
@@ -181,7 +172,7 @@ namespace Course.Controllers
             }
         }
 
-        [Authorize]
+        
         public void DeleteHeader(long id)
         {
             Header header = db.Headers.Find(id);
@@ -240,53 +231,6 @@ namespace Course.Controllers
             db.SaveChanges();
             return;
         }
-
-        public ActionResult View(long id, long selectedHeaderId = -1)
-        {
-            ViewBag.SelectedHeaderId = selectedHeaderId;
-
-            Creative creative = db.Creatives.Find(id);
-            if (creative == null)
-            {
-                return HttpNotFound();
-            }
-
-            bool isOwner = User.Identity.GetUserId() == creative.ApplicationUser.Id;
-
-            if (!isOwner)
-            {
-                creative.Views++;
-                db.Entry(creative).State = EntityState.Modified;
-                try
-                {
-                    db.SaveChanges();
-                }
-                catch(Exception e)
-                {
-                    throw e;
-                }
-            }
-
-            bool isOwnerOrNotAuthenticated = isOwner || !User.Identity.IsAuthenticated;
-
-            ViewBag.IsOwnerOrNotAuthenticated = isOwnerOrNotAuthenticated;
-
-            ViewBag.UserMark = 0;
-
-            if (!isOwnerOrNotAuthenticated) {
-                var userId = User.Identity.GetUserId();
-                var rating = db.Ratings.Where(x => x.ApplicationUser.Id == userId
-                                && x.Creative.Id == id).FirstOrDefault();
-
-                if (rating != null)
-                {
-                    ViewBag.UserMark = rating.Value.ToString().Replace(',','.');
-                }
-            }
-            return View(creative);
-        }
-
-        
 
         public string EstimateCreative(int id, double rating)
         {

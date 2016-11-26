@@ -2,22 +2,20 @@
 @model Creative
 
 @{ 
-    ViewBag.Title = "Edit";
+    ViewBag.Title = Resources.Resource.Edit;
     List<Header> Headers = new List<Header>(Model.Headers.OrderBy(x => x.Order));
 }
 
-
-<link rel="stylesheet" type="text/css" href="~/Content/edit.css" />
-<link href="~/Content/jquery.tagit.css" rel="stylesheet" type="text/css">
-<link href="~/Content/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
-<link href="~/Content/simplemde.min.css" rel="stylesheet" type="text/css">
-
+<link href="~/Content/Site/Edit.css" rel="stylesheet" type="text/css"  />
+<link href="~/Content/Libs/jquery.tagit.css" rel="stylesheet" type="text/css">
+<link href="~/Content/Libs/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
+<link href="~/Content/Libs/simplemde.min.css" rel="stylesheet" type="text/css">
 
 <br />
 
 <div id="page_header" class="row">
     <div id="back_button" class="col-md-3">
-        <a href="/User/Index" class="btn btn-success">
+        <a href="/User/Index/@Model.ApplicationUser.Id" class="btn btn-success">
             <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
         </a>
     </div>

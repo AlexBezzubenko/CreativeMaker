@@ -8,9 +8,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Course.Models;
 using Course.Lucene;
 using Course.Filters;
-
 using System.Data.Entity;
- 
+using Microsoft.AspNet.Identity;
 
 namespace Course.Controllers
 {
@@ -98,6 +97,48 @@ namespace Course.Controllers
             }
 
             return View(result);
+        }
+
+        public ActionResult View(long id, long selectedHeaderId = -1)
+        {
+            Creative creative = db.Creatives.Find(id);
+            if (creative == null)
+            {
+                return HttpNotFound();
+            }
+
+            bool isOwner = User.Identity.GetUserId() == creative.ApplicationUser.Id;
+
+            if (!isOwner)
+            {
+                creative.Views++;
+                db.Entry(creative).State = EntityState.Modified;
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+
+            bool isOwnerOrNotAuthenticated = isOwner || !User.Identity.IsAuthenticated;
+
+            var userMark = "0";
+
+            if (!isOwnerOrNotAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var rating = db.Ratings.Where(x => x.ApplicationUser.Id == userId
+                                && x.Creative.Id == id).FirstOrDefault();
+
+                if (rating != null)
+                {
+                    userMark = rating.Value.ToString().Replace(',', '.');
+                }
+            }
+            return View(new ViewCreativeViewModels(creative, selectedHeaderId, userMark, isOwnerOrNotAuthenticated));
         }
     }
 }

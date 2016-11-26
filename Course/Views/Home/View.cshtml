@@ -1,0 +1,101 @@
+﻿@using Course.Models;
+@using Microsoft.AspNet.Identity;
+
+@model ViewCreativeViewModels
+
+@{
+    ViewBag.Title = Model.Creative.Name;
+    
+    <link href="~/Content/Site/View.css"  rel="stylesheet" type="text/css"/>
+}
+
+<input id="selected_header_id" type="hidden" value="@Model.SelectedHeaderId"/>
+<input id="creative_id" type="hidden" value="@Model.Creative.Id" />
+<input id="creative_rating" type="hidden" value="@Model.Creative.Rating" />
+<input id="rating_string" type="hidden" value="@Resources.Resource.Of 5" />
+<input id="user_mark" type="hidden" value="@Model.UserMark" />
+<input id="is_rate_readonly" type="hidden" value="@Model.IsOwnerOrNotAuthenticated.ToString().ToLower()" />
+ 
+<div id="page_header">
+    <h2 id="name">@Model.Creative.Name</h2>
+    
+    @if (!Model.IsOwnerOrNotAuthenticated)
+    {
+        <div id="rateYoDiv" class="rateYo"></div>
+        <div id="yourMarkText">
+            <span>@Resources.Resource.YourMark:</span>
+        </div>
+    }
+    <div id="rateText">
+        <span>@Model.Creative.Rating.ToString("0.0") @Resources.Resource.Of 5</span>
+    </div>
+    <div id="rateYoGlobalDiv" class="rateYo"></div>
+    
+</div>
+<div id="username_views">
+    @if (@Model.Creative.ApplicationUser != null)
+    {   
+        <div id="username">
+            <p>@Model.Creative.ApplicationUser.UserName</p>
+            <p>
+                <i class="fa fa-calendar fa-2x" aria-hidden="true"></i>
+                @Model.Creative.CreationTime
+            </p>
+        </div>
+        <div id="views">            
+            <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
+            <p>@Model.Creative.Views</p>
+        </div>
+        <p>
+            <i class="fa fa-calendar-check-o fa-2x" aria-hidden="true"></i>
+            @Model.Creative.CreationTime
+        </p>
+        
+        <a href="/User/Edit/@Model.Creative.Id"><i class="fa fa-3x fa-pencil-square-o" aria-hidden="true"></i></a>
+    }
+</div>
+
+<div id="view_settings">
+    <div><a href="#" onclick="return false;" class="increaseFont"><i class="fa fa-2x fa-search-plus" aria-hidden="true"></i></a></div>
+    <div><a href="#" onclick="return false;" class="decreaseFont"><i class="fa fa-2x fa-search-minus" aria-hidden="true"></i></a></div>
+    @*
+    <div><a href="#" onclick="return false;" class="resetFont"><i class="fa fa-2x fa-refresh" aria-hidden="true"></i></a></div>
+    *@
+    <div class="arrows">
+        <a href="#" onclick="return false;" class="increasePanelWidth">
+            <i class="fa fa-2x fa-arrow-left" aria-hidden="true"></i>
+            <i class="fa fa-2x fa-arrow-right" aria-hidden="true"></i>
+        </a>
+    </div>
+    <div class="arrows">
+        <a href="#" onclick="return false;" class="decreasePanelWidth">
+            <i class="fa fa-2x fa-arrow-right" aria-hidden="true"></i>
+            <i class="fa fa-2x fa-arrow-left" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>
+
+<div id="headers">
+    @foreach (var header in Model.Creative.Headers)
+    {
+        string panelClass = "panel-primary";
+        if(header.Id == Model.SelectedHeaderId)
+        {
+            panelClass = "panel-success";
+        }
+        <div id="h@(header.Id)" class="panel @panelClass">
+            <div class="panel-heading">
+                <h3 class="panel-title">@header.Name @header.Id</h3>
+            </div>
+            <div class="panel-body">
+                @Html.Raw(Markdig.Markdown.ToHtml(header.Text))
+            </div>
+        </div>
+     }
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/Site/View.js" type="text/javascript"></script>
+}
+
+ 

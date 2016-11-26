@@ -1,6 +1,9 @@
 ﻿body {
 }
 
+.body-content{
+}
+
 #page_header {
     margin-bottom: 20px;
 }
@@ -10,7 +13,6 @@
     padding: 0;
 }
 
-
 #back_button {
     padding: 0;
     float: left;
@@ -19,7 +21,7 @@
 #creative_name_input {
     display: inline-block;
     font-size: 30px;
-    color: white;
+    /*color: white;*/
 }
 
 #creative_name_input input {

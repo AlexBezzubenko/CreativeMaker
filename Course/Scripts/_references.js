@@ -15,4 +15,6 @@
 /// <reference path="simplemde.min.js" />
 /// <reference path="site/homeindex.js" />
 /// <reference path="site/rateyointable.js" />
+/// <reference path="site/userindex.js" />
+/// <reference path="site/view.js" />
 /// <reference path="tag-it.js" />

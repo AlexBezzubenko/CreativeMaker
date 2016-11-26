@@ -12,12 +12,9 @@
     <table class="userListTable">
         <thead>
             <tr>
-                <th>
-                    @Resources.Resource.Author
-                </th>
-                <th>
-                    @Resources.Resource.RegistrationTime
-                </th>
+                <th>@Resources.Resource.Author</th>
+                <th>@Resources.Resource.RegistrationTime</th>
+                <th></th>
                 <th></th>
                 <th></th>
             </tr>
@@ -51,9 +48,10 @@
                         }
                     </td>
                     <td>
-                        @{
-                            @Html.ActionLink(Resources.Resource.Delete, "Delete", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-danger", style = "width:100px;" })
-                        }
+                        @Html.ActionLink(Resources.Resource.Delete, "Delete", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-danger", style = "width:100px;" })
+                    </td>
+                    <td>
+                        @Html.ActionLink(Resources.Resource.PersonalPage, "Index","User", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-github" })
                     </td>
                 </tr>
             }

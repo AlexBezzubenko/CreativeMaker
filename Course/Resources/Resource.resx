@@ -132,11 +132,11 @@
   <data name="ChooseLang" xml:space="preserve">
     <value>Выберите язык</value>
   </data>
-  <data name="Contacts" xml:space="preserve">
-    <value>Контакты</value>
-  </data>
   <data name="Create" xml:space="preserve">
     <value>Создать</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>Создано</value>
   </data>
   <data name="CreateNewCreative" xml:space="preserve">
     <value>Создать новый креатив</value>
@@ -156,6 +156,12 @@
   <data name="Edited" xml:space="preserve">
     <value>Отредактировано</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Ошибка возникла при выполнении вашего запроса</value>
+  </data>
   <data name="HeaderName" xml:space="preserve">
     <value>Глава</value>
   </data>
@@ -171,6 +177,12 @@
   <data name="Lock" xml:space="preserve">
     <value>Забанить</value>
   </data>
+  <data name="LockedOut" xml:space="preserve">
+    <value>Пользователь заблокирован</value>
+  </data>
+  <data name="LockedOutMessage" xml:space="preserve">
+    <value>К сожалению пользователь был заблокирован. Приносим вам наши извинения</value>
+  </data>
   <data name="LogIn" xml:space="preserve">
     <value>Войти</value>
   </data>
@@ -185,6 +197,9 @@
   </data>
   <data name="Of" xml:space="preserve">
     <value>из</value>
+  </data>
+  <data name="PersonalPage" xml:space="preserve">
+    <value>Личная страница</value>
   </data>
   <data name="Popular" xml:space="preserve">
     <value>Популярные</value>

@@ -15,24 +15,18 @@ namespace Course
         {
             ConfigureAuth(app);
             var context = new ApplicationDbContext();
-            Lucene.LuceneSearch.BuildIndex(context.Headers.Include(x => x.Creative).Include(x => x.Creative.ApplicationUser)
-                                .Include(x => x.Tags));
-
+            Lucene.LuceneSearch.BuildIndex(context.Headers.Include(x => x.Creative)
+                            .Include(x => x.Creative.ApplicationUser).Include(x => x.Tags));
 
             var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 
             var roleAdmin = new IdentityRole { Name = "admin" };
-            //var roleUser = new IdentityRole { Name = "user" };
 
             if (!roleManager.RoleExists("admin"))
             {
                 roleManager.Create(roleAdmin);
             }
-            /*if (!roleManager.RoleExists("user"))
-            {
-                roleManager.Create(roleUser);
-            }*/
 
             var admin = new ApplicationUser { Email = "admin@gmail.com", UserName = "admin@gmail.com" };
 
@@ -43,7 +37,6 @@ namespace Course
                 if (result.Succeeded)
                 {
                     userManager.AddToRole(admin.Id, roleAdmin.Name);
-                    //userManager.AddToRole(admin.Id, roleUser.Name);
                 }
 
                 context.SaveChanges();

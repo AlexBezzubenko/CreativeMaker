@@ -27,7 +27,7 @@
                     <th>@Resources.Resource.CreativeName</th>
                     <th>@Resources.Resource.Author</th>
                     <th>@Resources.Resource.Edited</th>
-                    <th></th>
+                    <th style="text-align: center;"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></th>
                     <th>@Resources.Resource.Rating</th>
                 </tr>
             </thead>
@@ -36,7 +36,7 @@
                 {
                     <tr class="success">
                         <td>
-                            @Html.ActionLink(item.Name, "View", "User", new { id = item.Id }, null)
+                            @Html.ActionLink(item.Name, "View", "Home", new { id = item.Id }, null)
                         </td>
                         <td>
                             @Html.DisplayFor(i => item.ApplicationUser.Email)
@@ -44,7 +44,7 @@
                         <td>
                             @Html.DisplayFor(i => item.LastEditTime)
                         </td>
-                        <td>
+                        <td align="center">
                             @Html.DisplayFor(i => item.Views)
                         </td>
                         <input class="itemRate" type="hidden" value="@item.Rating" />
@@ -64,7 +64,7 @@
                     <th>@Resources.Resource.CreativeName</th>
                     <th>@Resources.Resource.Author</th>
                     <th>@Resources.Resource.Edited</th>
-                    <th></th>
+                    <th style="text-align: center;"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></th>
                     <th>@Resources.Resource.Rating</th>
                 </tr>
             </thead>
@@ -73,7 +73,7 @@
                 {
                     <tr class="success">
                         <td>
-                            @Html.ActionLink(item.Name, "View", "User", new { id = item.Id }, null)
+                            @Html.ActionLink(item.Name, "View", "Home", new { id = item.Id }, null)
                         </td>
                         <td>
                             @Html.DisplayFor(i => item.ApplicationUser.Email)
@@ -82,7 +82,7 @@
                         <td>
                             @Html.DisplayFor(i => item.LastEditTime)
                         </td>
-                        <td>
+                        <td align="center">
                             @Html.DisplayFor(i => item.Views)
                         </td>
                         <input class="itemRate" type="hidden" value="@item.Rating" />
