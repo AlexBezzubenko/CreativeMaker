@@ -103,3 +103,4 @@ E:\D\itransition\Course-Project\Course\bin\Markdig.xml
 E:\D\itransition\Course-Project\Course\bin\HtmlAgilityPack.dll
 E:\D\itransition\Course-Project\Course\bin\HtmlAgilityPack.pdb
 E:\D\itransition\Course-Project\Course\bin\HtmlAgilityPack.xml
+E:\D\itransition\Course-Project\Course\obj\Debug\Course.Migrations.changemodelattr.resources

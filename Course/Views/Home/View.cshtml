@@ -7,6 +7,8 @@
     ViewBag.Title = Model.Creative.Name;
     
     <link href="~/Content/Site/View.css"  rel="stylesheet" type="text/css"/>
+
+    var IsOwnerOrNotAuthenticated = Model.IsOwner || !User.Identity.IsAuthenticated;
 }
 
 <input id="selected_header_id" type="hidden" value="@Model.SelectedHeaderId"/>
@@ -14,12 +16,12 @@
 <input id="creative_rating" type="hidden" value="@Model.Creative.Rating" />
 <input id="rating_string" type="hidden" value="@Resources.Resource.Of 5" />
 <input id="user_mark" type="hidden" value="@Model.UserMark" />
-<input id="is_rate_readonly" type="hidden" value="@Model.IsOwnerOrNotAuthenticated.ToString().ToLower()" />
+<input id="is_rate_readonly" type="hidden" value="@IsOwnerOrNotAuthenticated.ToString().ToLower()" />
  
 <div id="page_header">
     <h2 id="name">@Model.Creative.Name</h2>
     
-    @if (!Model.IsOwnerOrNotAuthenticated)
+    @if (!IsOwnerOrNotAuthenticated)
     {
         <div id="rateYoDiv" class="rateYo"></div>
         <div id="yourMarkText">
@@ -50,8 +52,11 @@
             <i class="fa fa-calendar-check-o fa-2x" aria-hidden="true"></i>
             @Model.Creative.CreationTime
         </p>
-        
-        <a href="/User/Edit/@Model.Creative.Id"><i class="fa fa-3x fa-pencil-square-o" aria-hidden="true"></i></a>
+
+        if (User.IsInRole("admin") || Model.IsOwner)
+        {
+            <a href="/User/Edit/@Model.Creative.Id"><i class="fa fa-3x fa-pencil-square-o" aria-hidden="true"></i></a>
+        }
     }
 </div>
 

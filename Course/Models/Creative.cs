@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
-
 
 namespace Course.Models
 {
@@ -15,7 +12,6 @@ namespace Course.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
         [Required]
         [DataType(DataType.Text)]
-        [StringLength(maximumLength: 200, MinimumLength = 3)]
         public string Name { get; set; }
         public long Views { get; set; }
         public double Rating { get; set; }

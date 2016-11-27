@@ -1,0 +1,12 @@
+﻿<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Resources.Resource.Theme<span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
+        @foreach (var theme in Course.Helpers.Bootstrap.Themes)
+        {
+            <li><a href="@Url.Action("ChangeTheme", "Home", new { themename = theme})">@theme</a></li>
+        }
+    </ul>
+</li>
+<li>
+    @Html.ActionLink((String)ViewData["currentLanguage"], "ChangeCulture", "Home", new { lang = ViewData["otherLanguage"] }, null)
+</li>

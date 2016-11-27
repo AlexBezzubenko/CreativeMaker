@@ -86,7 +86,6 @@ namespace Course.Controllers
             }
         }
 
-        [HttpGet]
         public ActionResult Edit(int id)
         {
             Creative creative = db.Creatives.Find(id);
@@ -97,11 +96,14 @@ namespace Course.Controllers
             creative.LastEditTime = DateTime.Now;
             db.Entry(creative).State = EntityState.Modified;
             db.SaveChanges();
-            ViewBag.Tags = db.Tags.Select(x => x.Name).Distinct();
-            return View(creative);
+
+            var tags = db.Tags.Select(x => x.Name).Distinct();
+            var serializer = new JavaScriptSerializer();
+
+            return View(new EditViewModels(creative, serializer.Serialize(tags)));
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult Edit(Creative creative)
         {
             creative.LastEditTime = DateTime.Now;
@@ -112,7 +114,7 @@ namespace Course.Controllers
                 return RedirectToAction("Index");
             }
             return View(creative);
-        }
+        }*/
 
 
         public void ChangeCreativeName(long Id, string Name)
@@ -152,72 +154,76 @@ namespace Course.Controllers
             {
                 return HttpNotFound();
             }
-            try
-            {
-                var header = new Header();
-                header.Order = creative.Headers.Count + 1;
 
-                db.Headers.Add(header);
-                creative.Headers.Add(header);
+            var header = CreateNewHeader(creative);
+            Lucene.LuceneSearch.AddToIndex(header);
 
-                db.SaveChanges();
+            return PartialView("~/Views/User/Header.cshtml", header);
+        }
 
-                Lucene.LuceneSearch.AddToIndex(header);
+        private Header CreateNewHeader(Creative creative)
+        {
+            var header = new Header();
+            header.Order = creative.Headers.Count + 1;
 
-                return PartialView("~/Views/User/Header.cshtml", header);
-            }
-            catch (DbEntityValidationException e)
-            {
-                throw;
-            }
+            db.Headers.Add(header);
+            creative.Headers.Add(header);
+
+            db.SaveChanges();
+            return header;
         }
 
         
         public void DeleteHeader(long id)
         {
             Header header = db.Headers.Find(id);
-            
-            try
-            {
-                Lucene.LuceneSearch.DeleteDocument(header);
-                db.Headers.Remove(header);
-                db.SaveChanges();
-            }
-            catch (DbEntityValidationException e)
-            {
-                throw;
-            }
+            Lucene.LuceneSearch.DeleteDocument(header);
+            db.Headers.Remove(header);
+            db.SaveChanges();
         }
-
-
 
         public void UpdateHeader(long Id, string Name, string Text, List<string> Tags)
         {
-            Header header = db.Headers.Find(Id);
-            header.Name = Name;
-            header.Text = Text;
-            header.Tags.Clear();
-
-            if (Tags != null)
-            {
-                foreach (string tagName in Tags)
-                {
-                    Tag t = db.Tags.FirstOrDefault(x => x.Name == tagName);
-                    if (t == null)
-                    {
-                        t = new Tag() { Name = tagName };
-                        db.Tags.Add(t);
-                        db.SaveChanges();
-                    }
-                    header.Tags.Add(t);
-                }
-            }
-
+            var header = GetHeaderWithUpdateNameAndText(Id, Name, Text);
+            AddTagsToHeader(header, Tags);
             db.Entry(header).State = EntityState.Modified;
             db.SaveChanges();
 
             Lucene.LuceneSearch.UpdateDocument(header);
             return;
+        }
+
+        private Header GetHeaderWithUpdateNameAndText(long Id, string Name, string Text)
+        {
+            var header = db.Headers.Find(Id);
+            header.Name = Name;
+            header.Text = Text;
+            header.Tags.Clear();
+            return header;
+        }
+
+        private void AddTagsToHeader(Header header, List<string> Tags)
+        {
+            if (Tags != null)
+            {
+                foreach (string tagName in Tags)
+                {
+                    var t = AddTagToDatabase(tagName);
+                    header.Tags.Add(t);
+                }
+            }
+        }
+
+        private Tag AddTagToDatabase(string tagName)
+        {
+            Tag t = db.Tags.FirstOrDefault(x => x.Name == tagName);
+            if (t == null)
+            {
+                t = new Tag() { Name = tagName };
+                db.Tags.Add(t);
+                db.SaveChanges();
+            }
+            return t;
         }
 
         public void UpdateHeaderOrders(int[] headerOrders)
@@ -239,39 +245,43 @@ namespace Course.Controllers
 
             if(!db.Ratings.Any(x => x.ApplicationUser.Id == currentUser.Id && x.Creative.Id == creative.Id))
             {
-                var userRating = new Rating
-                {
-                    ApplicationUser = currentUser,
-                    Creative = creative,
-                    Value = rating
-                };
-
-                creative.Rating = (creative.Rating * creative.RatingsAmount + rating)
-                                    / (creative.RatingsAmount + 1);
-                creative.RatingsAmount++;
-
-                db.Ratings.Add(userRating);
-                try
-                {
-                    db.SaveChanges();
-                }catch (Exception e)
-                {
-
-                }
+                NewUserRating(creative, rating, currentUser);
             }
             else
             {
-                var userRating = db.Ratings.Where(x => x.ApplicationUser.Id == currentUser.Id
-                    && x.Creative.Id == creative.Id).FirstOrDefault();
-                
-                creative.Rating = (creative.Rating * creative.RatingsAmount - userRating.Value + rating) 
-                                    / creative.RatingsAmount;
-                userRating.Value = rating;
-                //db.Entry(creative).State = EntityState.Modified;
-                db.Entry(userRating).State = EntityState.Modified;
-                db.SaveChanges();
+                UpdateUserRating(creative, rating, currentUser);
             }
             return creative.Rating.ToString("0.0").Replace(',','.');
+        }
+
+        private void NewUserRating(Creative creative, double rating, ApplicationUser currentUser)
+        {
+            var userRating = new Rating
+            {
+                ApplicationUser = currentUser,
+                Creative = creative,
+                Value = rating
+            };
+
+            creative.Rating = (creative.Rating * creative.RatingsAmount + rating)
+                                / (creative.RatingsAmount + 1);
+            creative.RatingsAmount++;
+
+            db.Ratings.Add(userRating);
+             
+            db.SaveChanges();
+        }
+
+        private void UpdateUserRating(Creative creative, double rating, ApplicationUser currentUser)
+        {
+            var userRating = db.Ratings.Where(x => x.ApplicationUser.Id == currentUser.Id
+                    && x.Creative.Id == creative.Id).FirstOrDefault();
+
+            creative.Rating = (creative.Rating * creative.RatingsAmount - userRating.Value + rating)
+                                / creative.RatingsAmount;
+            userRating.Value = rating;
+            db.Entry(userRating).State = EntityState.Modified;
+            db.SaveChanges();
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿@using Course.Models;
-@model Creative
+@model EditViewModels
 
 @{ 
     ViewBag.Title = Resources.Resource.Edit;
-    List<Header> Headers = new List<Header>(Model.Headers.OrderBy(x => x.Order));
+    List<Header> Headers = new List<Header>(Model.Creative.Headers.OrderBy(x => x.Order));
 }
 
 <link href="~/Content/Site/Edit.css" rel="stylesheet" type="text/css"  />
@@ -13,9 +13,13 @@
 
 <br />
 
+<input id="creative_name" type="hidden" value="@Model.Creative.Name" />
+<input id="creative_id" type="hidden" value="@Model.Creative.Id" />
+<input id="json_tags" type="hidden" value="@Model.JsonTags" />
+
 <div id="page_header" class="row">
     <div id="back_button" class="col-md-3">
-        <a href="/User/Index/@Model.ApplicationUser.Id" class="btn btn-success">
+        <a href="/User/Index/@Model.Creative.ApplicationUser.Id" class="btn btn-success">
             <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
         </a>
     </div>
@@ -23,12 +27,10 @@
     <div id="creative_name_block" class="col-md-9">
         @using (Html.BeginForm("ChangeCreativeName", "User", FormMethod.Post, new { id = "nameform" }))
         {
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div id="creative_name_input">
-                @Html.HiddenFor(model => model.Id)
-                <span id='name_label'>@Model.Name</span>
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { autocomplete = "off", @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Creative.Id)
+                <span id='name_label'>@Model.Creative.Name</span>
+                @Html.EditorFor(model => model.Creative.Name, new { htmlAttributes = new { autocomplete = "off", @class = "form-control" } })
             </div>
 
             <div id="creative_name_edit">
@@ -37,7 +39,6 @@
         }
     </div>
 </div>
-
 
  <div>
     <button type="button" class="btn btn-github hint--bottom" 
@@ -99,7 +100,6 @@
             }
         </ul>
         <textarea id="header_text" class="header_text">@header.Text</textarea>
-         
     </div>
 </div>
 
@@ -107,202 +107,5 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/tag-it.js" type="text/javascript" charset="utf-8"></script>
     <script src="~/Scripts/simplemde.min.js" type="text/javascript" charset="utf-8"></script>
-    <script>
-        $(document).ready(function () {
-            $('#nameform').on('keyup keypress', function (e) {
-                var keyCode = e.keyCode || e.which;
-                if (keyCode === 13) {
-                    e.preventDefault();
-                    if ($('#Name').val() != "@Model.Name" && $("#nameform").validate().element("#Name"))
-                    {
-                        console.log('post change name');
-                        $.ajax({
-                            async: false,
-                            data: { id: "@Model.Id", Name: $('#Name').val() },
-                            url: '/User/ChangeCreativeName'
-                        });
-                    }
-                    $('#Name').blur();
-                    return false;
-                }
-            });
-
-
-            $('#Name').blur(function () {
-                if ($('#Name').val().trim() != '') {
-                    $('#Name').hide();
-                    $('#name_label').html($('#Name').val());
-
-                    if ($('#Name').val() != "@Model.Name" && $("#nameform").validate().element("#Name"))
-                    {
-                        console.log('post change name');
-                        $.ajax({
-                            async: false,
-                            data: { id: "@Model.Id", Name: $('#Name').val() },
-                            url: '/User/ChangeCreativeName'
-                        });
-                    }
-                }
-            });
-
-            $('#creative_name_edit > i').click(function () {
-
-                if ($('#name_label').html().trim() != '') {
-
-                    $('#Name').show();
-
-                    $('#Name').val($('#name_label').html());
-
-                    $('#name_label').html('');
-                    $('#Name').focus();
-                }
-            });
-
-
-            $('#header_name_input').blur(function () {
-                if ($('#header_name_input').val().trim() != '') {
-                    $('#header_name_input').hide();
-                    $('#header_name > h3').html($('#header_name_input').val());
-                }
-            });
-
-            $('#header_name_edit > i').click(function () {
-
-                if ($('#header_name > h3').html().trim() != '') {
-
-                    $('#header_name_input').show();
-
-                    $('#header_name_input').val($('#header_name > h3').html());
-
-                    $('#header_name > h3').html('');
-                    $('#header_name_input').focus();
-                }
-            });
-
-
-            var simplemde = new SimpleMDE({
-                element: document.getElementById("header_text"),
-                spellChecker: false,
-            });
-
-            var myArray = [];
-
-             @foreach (var tag in ViewBag.Tags)
-             {
-                @:myArray.push("@tag");
-            }
-            $('#myTags').tagit({
-                availableTags: myArray
-            });
-            $("#headers_list").sortable({
-                axis: 'y',
-                update: function (event, ui) {
-                    var headers_id = [];
-                    var headers = $("#headers_list").children(".header");
-                    headers.each(function (idx, li) {
-                        var header = $(li);
-                        headers_id.push(header.val());
-                    });
-                    $.ajax({
-                        async: false,
-                        data: { headerOrders: headers_id },
-                        traditional: true,
-                        url: '/User/UpdateHeaderOrders'
-                    }).success(function () {});
-                }
-            });
-
-            $("#headers").delegate('.header', 'click', function (e) {
-                $('.active').removeClass('active');
-                $(this).addClass('active');
-                var index = $(event.target).val();
-                $.ajax({
-                    async: false,
-                    data: { id: index },
-                    url: '/User/SetHeaderContext'
-                }).success(function (header) {
-                    //$('#header_content').replaceWith(partialView);
-                    var headerJson = JSON.parse(header);
-                    console.log(headerJson);
-                    simplemde.value(headerJson.Text);
-                    $('#header_name_input').blur();
-                    $('#header_content h3').html(headerJson.Name);
-
-
-                    $("#myTags").tagit("removeAll");
-                    headerJson.Tags.forEach(function (item, i, arr) {
-                        $("#myTags").tagit("createTag", item);
-                    });
-                    $('#header_id').val(headerJson.Id);
-                });
-
-            });
-
-            $("#headers").delegate(".delete_header", "click", function (e) {
-                var header_li = $(this).closest(".header");
-                var header_id = header_li.val();
-                
-                $.ajax({
-                    async: false,
-                    data: { id: header_id },
-                    url: "/User/DeleteHeader"
-                }).success(function () {
-                    if (header_li.hasClass("active")) {
-                        simplemde.value("");
-                        $('#header_name_input').blur();
-                        $('#header_content h3').html("");
-
-                        $("#myTags").tagit("removeAll");
-                        $('#header_id').val("");
-                    }
-                    header_li.remove();
-                });
-
-            });
-
-           
-
-            $("#add_header").on('click', function () {
-                $.ajax({
-                    async: false,
-                    data: { id: "@Model.Id" },
-                    url: '/User/AddHeader'
-                }).success(function (partialView) {
-                    $('.active').removeClass('active');
-                    var newHeader = $(partialView).appendTo('#headers_list');
-                    newHeader.addClass('active');
-                    $("#headers_list").sortable("refresh");
-
-                    $('#header_id').val(newHeader.val());
-                    $('#header_name > h3').html(newHeader.text());
-                    simplemde.value("");
-                    $("#myTags").tagit("removeAll");
-                });
-            });
-            $("#update_header").on('click', function () {
-                var Id = $('#header_id').val();
-                if (Id < 0)
-                {
-                    return;
-                }
-                var Name = $('#header_name > h3').html();
-                var Text = simplemde.value();
-                var Tags = $("#myTags").tagit("assignedTags");
-
-                $(".header[value='"+ Id + "']").text(Name);
-
-                var data = { Id: Id, Name: Name, Text: Text, Tags: Tags }
-                console.log(data);
-                $.ajax({
-                    async: false,
-                    data: data,
-                    traditional:true,
-                    url: '/User/UpdateHeader'
-                });
-            });
-
-        });
-    </script>
-
-     
+    <script src="~/Scripts/Site/Edit.js" type="text/javascript"></script>
 }

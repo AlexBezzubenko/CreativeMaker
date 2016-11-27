@@ -13,6 +13,7 @@
 /// <reference path="modernizr-2.6.2.js" />
 /// <reference path="respond.js" />
 /// <reference path="simplemde.min.js" />
+/// <reference path="site/edit.js" />
 /// <reference path="site/homeindex.js" />
 /// <reference path="site/rateyointable.js" />
 /// <reference path="site/userindex.js" />

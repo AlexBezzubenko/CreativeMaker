@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
 
 namespace Course.Models
 {
@@ -14,7 +9,6 @@ namespace Course.Models
         public long Id { get; set; }
         [Required]
         [DataType(DataType.Text)]
-        [StringLength(maximumLength: 80, MinimumLength = 3)]
         public string Name { get; set; }
         [DataType(DataType.MultilineText)]
         public string Text { get; set; }

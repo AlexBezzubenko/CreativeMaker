@@ -258,11 +258,16 @@
     <Compile Include="Migrations\201611211723239_badge-amount.Designer.cs">
       <DependentUpon>201611211723239_badge-amount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611270949068_changemodelattr.cs" />
+    <Compile Include="Migrations\201611270949068_changemodelattr.Designer.cs">
+      <DependentUpon>201611270949068_changemodelattr.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Badge.cs" />
     <Compile Include="Models\Creative.cs" />
     <Compile Include="Models\CreativeResult.cs" />
+    <Compile Include="Models\EditViewModels.cs" />
     <Compile Include="Models\Header.cs" />
     <Compile Include="Models\HomeViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -381,6 +386,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\simplemde.min.js" />
+    <Content Include="Scripts\Site\Edit.js" />
     <Content Include="Scripts\Site\HomeIndex.js" />
     <Content Include="Scripts\Site\RateYoInTable.js" />
     <Content Include="Scripts\Site\UserIndex.js" />
@@ -426,6 +432,7 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Header.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Shared\_NavbarThemeLang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -461,6 +468,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611211723239_badge-amount.resx">
       <DependentUpon>201611211723239_badge-amount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611270949068_changemodelattr.resx">
+      <DependentUpon>201611270949068_changemodelattr.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

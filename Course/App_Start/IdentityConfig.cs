@@ -46,14 +46,14 @@ namespace Course
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
-                AllowOnlyAlphanumericUserNames = false,
+                AllowOnlyAlphanumericUserNames = true,
                 RequireUniqueEmail = true
             };
 
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 4,
+                RequiredLength = 6,
                 //RequireNonLetterOrDigit = true,
                 //RequireDigit = true,
                 //RequireLowercase = true,
@@ -113,8 +113,6 @@ namespace Course
             return result;
         }
     }
-
-    
 
     // Configure the application sign-in manager which is used in this application.
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>

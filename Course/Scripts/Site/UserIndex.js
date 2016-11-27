@@ -13,6 +13,11 @@
 
     $('#create_button').on("click", function () {
         var creative_name = $('#creative-name').val();
+        if (creative_name === null || creative_name.match(/^ *$/) !== null)
+        {
+            return;
+        }
+
         var user_id = $('#user_id').val();
 
         var data = {

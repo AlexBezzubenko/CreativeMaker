@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity.Owin;
 using Course.Models;
 using Course.Lucene;
 using Course.Filters;
@@ -108,37 +106,37 @@ namespace Course.Controllers
             }
 
             bool isOwner = User.Identity.GetUserId() == creative.ApplicationUser.Id;
+            IncreaseViews(creative, isOwner);
+            var userMark = GetUserMark(isOwner, id);
+            
+            return View(new ViewCreativeViewModels(creative, selectedHeaderId, userMark, isOwner));
+        }
 
+        private void IncreaseViews(Creative creative, bool isOwner)
+        {
             if (!isOwner)
             {
                 creative.Views++;
                 db.Entry(creative).State = EntityState.Modified;
-                try
-                {
-                    db.SaveChanges();
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+                db.SaveChanges();
             }
+        }
 
-            bool isOwnerOrNotAuthenticated = isOwner || !User.Identity.IsAuthenticated;
-
-            var userMark = "0";
-
-            if (!isOwnerOrNotAuthenticated)
+        private string GetUserMark(bool isOwner, long creativeId)
+        {
+            if (!isOwner && User.Identity.IsAuthenticated)
             {
                 var userId = User.Identity.GetUserId();
                 var rating = db.Ratings.Where(x => x.ApplicationUser.Id == userId
-                                && x.Creative.Id == id).FirstOrDefault();
+                                && x.Creative.Id == creativeId).FirstOrDefault();
 
                 if (rating != null)
                 {
-                    userMark = rating.Value.ToString().Replace(',', '.');
+                    return rating.Value.ToString().Replace(',', '.');
                 }
             }
-            return View(new ViewCreativeViewModels(creative, selectedHeaderId, userMark, isOwnerOrNotAuthenticated));
+
+            return "0";
         }
     }
 }
