@@ -290,6 +290,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\loading_spinner.gif" />
     <Content Include="Content\Libs\bootstrap-social.css" />
     <Content Include="Content\Libs\bootstrap.css" />
     <Content Include="Content\Libs\bootstrap.min.css" />
@@ -303,6 +304,7 @@
     <Content Include="Content\Libs\jquery.tagit.css" />
     <Content Include="Content\Libs\simplemde.min.css" />
     <Content Include="Content\Libs\tagit.ui-zendesk.css" />
+    <Content Include="Content\Site\Search.css" />
     <Content Include="Content\Themes\base\accordion.css" />
     <Content Include="Content\Themes\base\all.css" />
     <Content Include="Content\Themes\base\autocomplete.css" />
@@ -389,6 +391,7 @@
     <Content Include="Scripts\Site\Edit.js" />
     <Content Include="Scripts\Site\HomeIndex.js" />
     <Content Include="Scripts\Site\RateYoInTable.js" />
+    <Content Include="Scripts\Site\Search.js" />
     <Content Include="Scripts\Site\UserIndex.js" />
     <Content Include="Scripts\Site\View.js" />
     <Content Include="Scripts\tag-it.js" />
@@ -433,6 +436,7 @@
     <Content Include="Views\User\Header.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Shared\_NavbarThemeLang.cshtml" />
+    <Content Include="Views\Home\_Items.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -120,17 +120,50 @@
   <data name="Admin" xml:space="preserve">
     <value>Admin</value>
   </data>
+  <data name="ApplicationName" xml:space="preserve">
+    <value>CreativeMaker</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Author</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
   <data name="ChooseLang" xml:space="preserve">
     <value>Choose language</value>
   </data>
-  <data name="Contacts" xml:space="preserve">
-    <value>Contacts</value>
-  </data>
   <data name="Create" xml:space="preserve">
     <value>Create</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>Created</value>
+  </data>
+  <data name="CreateNewCreative" xml:space="preserve">
+    <value>Create new creative</value>
+  </data>
+  <data name="CreateNewHeader" xml:space="preserve">
+    <value>Create new header</value>
+  </data>
+  <data name="CreativeName" xml:space="preserve">
+    <value>Creative</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Edited" xml:space="preserve">
+    <value>Edited</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>An error occurred while processing your request</value>
+  </data>
+  <data name="HeaderName" xml:space="preserve">
+    <value>Header</value>
   </data>
   <data name="Hello" xml:space="preserve">
     <value>Hello</value>
@@ -138,8 +171,20 @@
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="LastEdited" xml:space="preserve">
+    <value>Last edited</value>
+  </data>
+  <data name="Lock" xml:space="preserve">
+    <value>Lock</value>
+  </data>
+  <data name="LockedOut" xml:space="preserve">
+    <value>User is locked out</value>
+  </data>
+  <data name="LockedOutMessage" xml:space="preserve">
+    <value>This account has been locked out, please try again later</value>
+  </data>
   <data name="LogIn" xml:space="preserve">
-    <value>Log in</value>
+    <value>Log In</value>
   </data>
   <data name="LogOff" xml:space="preserve">
     <value>Log off</value>
@@ -153,8 +198,23 @@
   <data name="Of" xml:space="preserve">
     <value>of</value>
   </data>
+  <data name="PersonalPage" xml:space="preserve">
+    <value>Personal page</value>
+  </data>
+  <data name="Popular" xml:space="preserve">
+    <value>Popular</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>Rating</value>
+  </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>
+  </data>
+  <data name="RegistrationTime" xml:space="preserve">
+    <value>Registration time</value>
+  </data>
+  <data name="SaveHeaderContent" xml:space="preserve">
+    <value>Save header content</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
@@ -162,11 +222,14 @@
   <data name="SearchButton" xml:space="preserve">
     <value>I'm Feeling Lucky!</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value>String1</value>
+  <data name="SearchResults" xml:space="preserve">
+    <value>Results</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Theme</value>
+  </data>
+  <data name="Unlock" xml:space="preserve">
+    <value>Unlock</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>My page</value>

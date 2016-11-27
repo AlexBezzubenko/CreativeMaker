@@ -14,6 +14,7 @@ namespace Course.Controllers
     [Culture]
     public class HomeController : Controller
     {
+        const int pageSize = 12;
         ApplicationDbContext db = new ApplicationDbContext();
 
         public ActionResult Index()
@@ -85,16 +86,30 @@ namespace Course.Controllers
             return Redirect(Request.UrlReferrer.AbsolutePath);
         }
 
-        public ActionResult Search(string query)
+        public ActionResult Search(string query, int? id)
         {
-            var result = LuceneSearch.Search(query, 100);
+            ViewBag.query = query;
+            int page = id ?? 0;
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_Items", GetItemsPage(query, page));
+            }
+            return View(GetItemsPage(query, page));
+        }
 
-            foreach(var creativeResult in result)
+        private IEnumerable<CreativeResult> GetItemsPage(string query, int page = 1)
+        {
+            System.Threading.Thread.Sleep(1000);
+            var itemsToSkip = page * pageSize;
+
+            var result = LuceneSearch.Search(query, 100).Skip(itemsToSkip).Take(pageSize);
+
+            foreach (var creativeResult in result)
             {
                 creativeResult.Rating = db.Creatives.Find(creativeResult.CreativeId).Rating;
             }
 
-            return View(result);
+            return result;
         }
 
         public ActionResult View(long id, long selectedHeaderId = -1)

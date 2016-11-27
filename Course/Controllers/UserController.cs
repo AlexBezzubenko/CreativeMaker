@@ -103,20 +103,6 @@ namespace Course.Controllers
             return View(new EditViewModels(creative, serializer.Serialize(tags)));
         }
 
-        /*[HttpPost]
-        public ActionResult Edit(Creative creative)
-        {
-            creative.LastEditTime = DateTime.Now;
-            if (ModelState.IsValid)
-            {
-                db.Entry(creative).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(creative);
-        }*/
-
-
         public void ChangeCreativeName(long Id, string Name)
         {
             Creative creative = db.Creatives.Find(Id);
