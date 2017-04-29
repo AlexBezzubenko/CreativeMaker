@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNet.Identity
+
+@{ 
+    HttpCookie cookie = Request.Cookies["lang"];
+    String currentLanguage;
+    if (cookie != null && !cookie.Value.IsEmpty())
+    {
+        currentLanguage = cookie.Value;
+    }
+    else
+    {
+        currentLanguage = "ru";
+    }
+
+    String otherLanguage;
+    if (currentLanguage == "ru")
+    {
+        otherLanguage = "en";
+    }
+    else
+    {
+        otherLanguage = "ru";
+    }
+
+    var changeLangParams =
+        new ViewDataDictionary {{ "currentLanguage", currentLanguage },{ "otherLanguage", otherLanguage } };
+}
+
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        @Html.Partial("_NavbarThemeLang", changeLangParams)
+        <li>
+            @Html.ActionLink(Resources.Resource.Hello + ", " + User.Identity.GetUserName() + "!", 
+                            "Index", "Manage", routeValues: null, htmlAttributes: null)
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">@Resources.Resource.LogOff</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        @Html.Partial("_NavbarThemeLang", changeLangParams)
+        <li>@Html.ActionLink(Resources.Resource.Register, "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink(Resources.Resource.LogIn, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

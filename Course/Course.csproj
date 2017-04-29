@@ -267,7 +267,6 @@
     <Compile Include="Models\Badge.cs" />
     <Compile Include="Models\Creative.cs" />
     <Compile Include="Models\CreativeResult.cs" />
-    <Compile Include="Models\EditViewModels.cs" />
     <Compile Include="Models\Header.cs" />
     <Compile Include="Models\HomeViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -275,7 +274,6 @@
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\UserViewModels.cs" />
-    <Compile Include="Models\ViewCreativeViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resource.en.Designer.cs">
       <DependentUpon>Resource.en.resx</DependentUpon>
@@ -304,6 +302,8 @@
     <Content Include="Content\Libs\jquery.tagit.css" />
     <Content Include="Content\Libs\simplemde.min.css" />
     <Content Include="Content\Libs\tagit.ui-zendesk.css" />
+    <Content Include="Content\Site\Login.css" />
+    <Content Include="Content\Site\Register.css" />
     <Content Include="Content\Site\Search.css" />
     <Content Include="Content\Themes\base\accordion.css" />
     <Content Include="Content\Themes\base\all.css" />
@@ -371,6 +371,7 @@
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\fonts\FontAwesome.otf" />
+    <None Include="Properties\PublishProfiles\alexmor.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />

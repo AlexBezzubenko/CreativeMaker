@@ -1,0 +1,21 @@
+﻿.body-content{
+    //background-color:black;
+}
+
+.medal_image {
+    width: 97px;
+    height:156px;
+}
+
+#medals{
+    margin-bottom:20px;
+}
+ 
+table.tablesorter thead tr th {
+	background-color: #e6EEEE;
+}
+ 
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+background-color: #8dbdd8;
+}
+

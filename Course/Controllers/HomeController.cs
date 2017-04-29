@@ -24,7 +24,7 @@ namespace Course.Controllers
             var popularCreatives = db.Creatives.Include(x => x.ApplicationUser)
                                 .Include(x => x.Headers).OrderByDescending(u => u.Views).Take(5);
             var tags = db.Tags.ToList();
-            return View(new HomeViewModels(lastCreatives, popularCreatives, tags));
+            return View(new HomeViewModel(lastCreatives, popularCreatives, tags));
         }
 
         public ActionResult HeadersByTag(int id)
@@ -124,7 +124,7 @@ namespace Course.Controllers
             IncreaseViews(creative, isOwner);
             var userMark = GetUserMark(isOwner, id);
             
-            return View(new ViewCreativeViewModels(creative, selectedHeaderId, userMark, isOwner));
+            return View(new ViewCreativeViewModel(creative, selectedHeaderId, userMark, isOwner));
         }
 
         private void IncreaseViews(Creative creative, bool isOwner)

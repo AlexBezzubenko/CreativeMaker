@@ -1,0 +1,15 @@
+﻿#whole_login_form{
+    text-align:center;
+}
+#loginBlock {
+    margin-top:5%;
+    min-width:150px;
+    width:20%;
+    text-align:center;
+    display:inline-block;
+}
+
+.checkbox{
+    display:none;
+}
+ 

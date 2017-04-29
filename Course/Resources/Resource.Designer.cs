@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Свяжите свой аккаунт с.
+        /// </summary>
+        public static string AssociateYourAccountWith {
+            get {
+                return ResourceManager.GetString("AssociateYourAccountWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Автор.
         /// </summary>
         public static string Author {
@@ -97,11 +106,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Смена пароля.
+        /// </summary>
+        public static string ChangePassword {
+            get {
+                return ResourceManager.GetString("ChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Выберите язык.
         /// </summary>
         public static string ChooseLang {
             get {
                 return ResourceManager.GetString("ChooseLang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Подтвердите пароль.
+        /// </summary>
+        public static string ConfirmPassword {
+            get {
+                return ResourceManager.GetString("ConfirmPassword", resourceCulture);
             }
         }
         
@@ -142,11 +169,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Создание пароля.
+        /// </summary>
+        public static string CreatePassword {
+            get {
+                return ResourceManager.GetString("CreatePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to У вас нет локальных логина и пароля для этого сайта. Добавьте локальный аккаунт, чтобы вы могли войти без внешней авторизации.
+        /// </summary>
+        public static string CreatePasswordMessage {
+            get {
+                return ResourceManager.GetString("CreatePasswordMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Креатив.
         /// </summary>
         public static string CreativeName {
             get {
                 return ResourceManager.GetString("CreativeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Текущий пароль.
+        /// </summary>
+        public static string CurrentPassword {
+            get {
+                return ResourceManager.GetString("CurrentPassword", resourceCulture);
             }
         }
         
@@ -277,6 +331,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Управление аккаунтом.
+        /// </summary>
+        public static string Manage {
+            get {
+                return ResourceManager.GetString("Manage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Название.
         /// </summary>
         public static string Name {
@@ -295,6 +358,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Новый пароль.
+        /// </summary>
+        public static string NewPassword {
+            get {
+                return ResourceManager.GetString("NewPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to из.
         /// </summary>
         public static string Of {
@@ -304,11 +376,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Пароль.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Личная страница.
         /// </summary>
         public static string PersonalPage {
             get {
                 return ResourceManager.GetString("PersonalPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Пожалуйста, введите имя для сайта ниже и нажмите на кнопку Зарегистрироваться, чтобы завершить вход.
+        /// </summary>
+        public static string PleaseEnterName {
+            get {
+                return ResourceManager.GetString("PleaseEnterName", resourceCulture);
             }
         }
         
@@ -336,6 +426,15 @@ namespace Resources {
         public static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Регистрация.
+        /// </summary>
+        public static string Registration {
+            get {
+                return ResourceManager.GetString("Registration", resourceCulture);
             }
         }
         
@@ -381,6 +480,15 @@ namespace Resources {
         public static string SearchResults {
             get {
                 return ResourceManager.GetString("SearchResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вы были успешно аутентифицированы с .
+        /// </summary>
+        public static string SuccessAssociated {
+            get {
+                return ResourceManager.GetString("SuccessAssociated", resourceCulture);
             }
         }
         

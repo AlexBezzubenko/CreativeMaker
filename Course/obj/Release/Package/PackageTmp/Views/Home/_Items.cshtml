@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Course.Models.CreativeResult>
+
+@foreach (var result in Model)
+{
+    <tr class="success">
+        <td>
+            @Html.ActionLink(result.CreativeName, "View", "Home",
+                                     new { id = result.CreativeId }, null)
+        </td>
+        <td>
+            @Html.ActionLink(result.HeaderName, "View", "Home",
+                                     new { id = result.CreativeId, selectedHeaderId = result.HeaderId }, null)
+        </td>
+        <td>
+            @Html.DisplayFor(i => result.UserName)
+        </td>
+        <input class="itemRate" type="hidden" value="@result.Rating" />
+        <td>
+            <div class="rateYo"></div>
+        </td>
+    </tr>
+
+}

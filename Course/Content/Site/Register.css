@@ -1,0 +1,12 @@
+﻿#register_page {
+    text-align:center;
+}
+
+#registerForm {
+    margin-top:7%;
+    display:inline-block;
+}
+
+.formPart {
+    text-align:left;
+}

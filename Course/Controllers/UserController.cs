@@ -30,7 +30,7 @@ namespace Course.Controllers
             var user = db.Users.Find(currentUserId);
             var creatives = db.Creatives.Where(x => x.ApplicationUser.Id == currentUserId)
                                 .Include(x => x.ApplicationUser).Include(x => x.Headers);
-            return View(new UserViewModels(creatives, user));
+            return View(new UserViewModel(creatives, user));
         }
 
         [HttpPost]
@@ -100,7 +100,7 @@ namespace Course.Controllers
             var tags = db.Tags.Select(x => x.Name).Distinct();
             var serializer = new JavaScriptSerializer();
 
-            return View(new EditViewModels(creative, serializer.Serialize(tags)));
+            return View(new EditViewModel(creative, serializer.Serialize(tags)));
         }
 
         public void ChangeCreativeName(long Id, string Name)
